@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Funcionario{% endblock %}
+{% block title %}Lista de Funcionarios{% endblock %}
 
 {% block body %}
  <div class="espaco">
@@ -27,7 +27,7 @@
                 <td>{{ funcionario.nome }}</td>
                 <td>{{ funcionario.matricula }}</td>
                 <td>{{ funcionario.cpf }}</td>
-                 <td>{{ funcionario.secretaria }}</td>
+                 <td>{{ funcionario.secretaria.nome }}</td>
                 <td>
                     {% if funcionario.status == 1 %}
                         <i class="check circle green icon"></i> Ativo

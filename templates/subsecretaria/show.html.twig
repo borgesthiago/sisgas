@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SubSecretaria{% endblock %}
+
+{% block body %}
+    <h1>SubSecretaria</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sub_secretarium.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ sub_secretarium.nome }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sub_secretaria_index') }}">back to list</a>
+
+    <a href="{{ path('sub_secretaria_edit', {'id': sub_secretarium.id}) }}">edit</a>
+
+    {{ include('sub_secretaria/_delete_form.html.twig') }}
+{% endblock %}

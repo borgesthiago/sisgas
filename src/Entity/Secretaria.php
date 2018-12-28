@@ -43,9 +43,15 @@ class Secretaria
      */
     private $secretaria;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SubSecretaria", mappedBy="secretaria", orphanRemoval=true)
+     */
+    private $subsecretaria;
+
     public function __construct()
     {
         $this->secretaria = new ArrayCollection();
+        $this->subsecretaria = new ArrayCollection();
     }
 
     public function getId()
@@ -126,6 +132,37 @@ class Secretaria
             // set the owning side to null (unless already changed)
             if ($secretarium->getSecretaria() === $this) {
                 $secretarium->setSecretaria(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SubSecretaria[]
+     */
+    public function getSubsecretaria(): Collection
+    {
+        return $this->subsecretaria;
+    }
+
+    public function addSubsecretarium(SubSecretaria $subsecretarium): self
+    {
+        if (!$this->subsecretaria->contains($subsecretarium)) {
+            $this->subsecretaria[] = $subsecretarium;
+            $subsecretarium->setSecretaria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubsecretarium(SubSecretaria $subsecretarium): self
+    {
+        if ($this->subsecretaria->contains($subsecretarium)) {
+            $this->subsecretaria->removeElement($subsecretarium);
+            // set the owning side to null (unless already changed)
+            if ($subsecretarium->getSecretaria() === $this) {
+                $subsecretarium->setSecretaria(null);
             }
         }
 

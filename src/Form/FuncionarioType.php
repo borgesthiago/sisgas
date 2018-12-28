@@ -5,12 +5,13 @@ namespace App\Form;
 use App\Entity\Funcionario;
 use App\Entity\Secretaria;
 use App\Entity\Remuneracao;
-use App\Entity\User;
+use App\Entity\Habitacao;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use App\Form\Type\CpfType;
 
@@ -20,11 +21,36 @@ class FuncionarioType extends AbstractType
     {
         $builder
             ->add('nome')
-            ->add('matricula')
+            ->add('matricula', null, array(
+                'required'   => false,
+                'label' => 'Matrícula',
+            ))
             ->add('cpf', CpfType::class, [
                 'required' => false
-            ])
-            ->add('endereco')
+            ])            
+            ->add('cargo')
+            ->add('funcao', null, array(
+                'required'   => false,
+                'label' => 'Função',
+            ))
+            ->add('rg')
+            ->add('orgaoRg', null, array(
+                'required'   => false,
+                'label' => 'Órgão do RG',
+            ))
+            ->add('rgProfissao', null, array(
+                'required'   => false,
+                'label' => 'Registro Profissional',
+            ))
+            ->add('orgaoRgProfissao', null, array(
+                'required'   => false,
+                'label' => 'Órgão do Registro',
+            ))
+            ->add('coordenador', ChoiceType::class, array(
+                'choices'  => array(
+                    'Não'  =>0,
+                    'Sim' =>1
+                )))
             ->add('secretaria', EntityType::class, [
                 'class' => Secretaria::class,
                 'choice_label' => 'nome',
@@ -52,6 +78,7 @@ class FuncionarioType extends AbstractType
             )))
         ;
         $builder->add('tipo', ChoiceType::class, array(
+            'label' => 'Vínculo',
             'choices'  => array(
                 'Estatutário'    => 'Estatutário',
                 'Comissionado' => 'Comissionado'
@@ -60,6 +87,7 @@ class FuncionarioType extends AbstractType
         // $builder->add('user', UserType::class);
          $builder->add('contato', ContatoType::class);
          $builder->add('remuneracao', RemuneracaoType::class);
+         $builder->add('habitacao', HabitacaoType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

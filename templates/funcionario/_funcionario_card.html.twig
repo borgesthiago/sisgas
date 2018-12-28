@@ -19,13 +19,21 @@
                                 <div class="content">
                                     <div class="summary">
                                         Servidor <a>{{ funcionario.tipo }}</a> com a matrícula <a>{{ funcionario.matricula }}</a>, portador do CPF Nº <a>{{ funcionario.cpf |number_format (2, '-', '.')}}</a>.
+                                        <br>RG: <a>{{ funcionario.rg }}</a> - Órgão Expedidor <a>{{ funcionario.orgaoRg }}</a>                                   
+                                        <br>RG Profissional: <a>{{ funcionario.rgProfissao }}</a> - Órgão Expedidor <a>{{ funcionario.orgaoRgProfissao }}</a>                                   
+                                        <br>Coordenador: <a>{% if funcionario.coordenador ==0 %}Não{% else %}Sim{% endif %}</a>
+                                        <br>Cargo: <a>{{ funcionario.cargo }}</a>
+                                        <br>Função: <a>{{ funcionario.funcao }}</a> 
                                     </div>
                                 </div>
                             </div>
                             <div class="event">
                                 <div class="content">
                                     <div class="summary">
-                                        Reside no endereço <a>{{ funcionario.endereco }}</a>
+                                        Endereço: <a>{{ funcionario.habitacao.endereco }}</a><br>
+                                        Bairro: <a>{{ funcionario.habitacao.bairro }}</a><br>
+                                        Cidade: <a>{{ funcionario.habitacao.cidade }}</a><br>
+                                        CEP: <a>{{ funcionario.habitacao.cep }}</a><br>
                                     </div>
                                 </div>
                             </div>

@@ -1,36 +1,38 @@
 <?php
 
 namespace App\Form;
-use App\Entity\Funcionario;
-use App\Entity\Remuneracao;
+
+use App\Entity\Habitacao;
+use App\Entity\Bairro;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
-class RemuneracaoType extends AbstractType
+class HabitacaoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('salario', null, array(
+            ->add('endereco')
+            ->add('bairro', null, array(
                 'required'   => false,
-                'label' => 'Salário',
             ))
-            ->add('gratificacao', null, array(
+            ->add('cidade', null, array(
                 'required'   => false,
-                'label' => 'Gratificação',
             ))
-            ->add('desconto')
-            //->add('funcionario')
+            ->add('cep', null, array(
+                'required'   => false,
+            ))
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Remuneracao::class,
+            'data_class' => Habitacao::class,
         ]);
     }
 }

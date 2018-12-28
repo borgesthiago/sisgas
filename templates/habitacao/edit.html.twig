@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Habitacao{% endblock %}
+
+{% block body %}
+    <h1>Edit Habitacao</h1>
+
+    {{ include('habitacao/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('habitacao_index') }}">back to list</a>
+
+    {{ include('habitacao/_delete_form.html.twig') }}
+{% endblock %}

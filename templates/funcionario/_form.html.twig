@@ -3,31 +3,44 @@
     <div class="column">
         {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
         <div class="fields">
-            {{ form_row(form.nome, {'attr': {'data-row-class': 'ten wide'}}) }}
-             {{ form_row(form.cpf, {'attr': {'data-row-class': 'four wide'}}) }}
+            {{ form_row(form.nome, {'attr': {'data-row-class': 'seven wide'}}) }}
+             {{ form_row(form.cpf, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.rg, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.orgaoRg, {'attr': {'data-row-class': 'three wide'}}) }}
         </div>
-        <div class="fields">
+         <div class="fields">
+            {{ form_row(form.rgProfissao, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.orgaoRgProfissao, {'attr': {'data-row-class': 'three wide'}}) }}
             {{ form_row(form.matricula, {'attr': {'data-row-class': 'two wide'}}) }}
-            {{ form_row(form.endereco, {'attr': {'data-row-class': 'eight wide'}}) }}
+            {{ form_row(form.coordenador, {'attr': {'data-row-class': 'two wide'}}) }}
             {{ form_row(form.tipo, {'attr': {'data-row-class': 'two wide'}}) }}
             {{ form_row(form.status, {'attr': {'data-row-class': 'two wide'}}) }}
         </div>
         <div class="fields">
+            {{ form_row(form.habitacao.endereco, {'attr': {'data-row-class': 'eight wide'}}) }}
+            {{ form_row(form.habitacao.bairro, {'attr': {'data-row-class': 'three wide'}}) }}
+            {{ form_row(form.habitacao.cidade, {'attr': {'data-row-class': 'three wide'}}) }}
+        </div>
+        <div class="fields">
+            {{ form_row(form.habitacao.cep, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.contato.telefone, {'attr': {'data-row-class': 'three wide'}}) }}
+            {{ form_row(form.contato.celular, {'attr': {'data-row-class': 'three wide'}}) }}
             {{ form_row(form.secretaria, {'attr': {'data-row-class': 'six wide'}}) }}
-            {{ form_row(form.contato.telefone, {'attr': {'data-row-class': 'two wide'}}) }}
-            {{ form_row(form.contato.celular, {'attr': {'data-row-class': 'two wide'}}) }}
-        </div> 
+        </div>
+        <div class="fields">
+            {{ form_row(form.cargo, {'attr': {'data-row-class': 'six wide'}}) }}
+            {{ form_row(form.funcao, {'attr': {'data-row-class': 'six wide'}}) }}
+        </div>
         <div class="fields">
             {{ form_row(form.remuneracao.salario, {'attr': {'data-row-class': 'three wide'}}) }}
             {{ form_row(form.remuneracao.gratificacao, {'attr': {'data-row-class': 'two wide'}}) }}
             {{ form_row(form.remuneracao.desconto, {'attr': {'data-row-class': 'two wide'}}) }}
             {{ form_row(form.admissao, {'attr': {'data-row-class': 'three wide'}}) }}            
-            {{ form_row(form.exoneracao, {'attr': {'data-row-class': 'three wide'}}) }}         
-                
+            {{ form_row(form.exoneracao, {'attr': {'data-row-class': 'three wide'}}) }} 
         </div> 
         <div class="fields">
             <div class="ui right floated buttons">
-                <button class="ui button">{{ button_label|default('Salvar') }}</button>
+                <button class="ui blue button"><i class="save icon"></i> {{ button_label|default('Salvar') }}</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Habitacao index{% endblock %}
+
+{% block body %}
+    <h1>Habitacao index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Endereco</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Cep</th>
+                <th>TipoImovel</th>
+                <th>TipoConstrucao</th>
+                <th>Situacao</th>
+                <th>Saneamento</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for habitacao in habitacaos %}
+            <tr>
+                <td>{{ habitacao.id }}</td>
+                <td>{{ habitacao.endereco }}</td>
+                <td>{{ habitacao.bairro }}</td>
+                <td>{{ habitacao.cidade }}</td>
+                <td>{{ habitacao.cep }}</td>
+                <td>{{ habitacao.tipoImovel }}</td>
+                <td>{{ habitacao.tipoConstrucao }}</td>
+                <td>{{ habitacao.situacao }}</td>
+                <td>{{ habitacao.saneamento }}</td>
+                <td>
+                    <a href="{{ path('habitacao_show', {'id': habitacao.id}) }}">show</a>
+                    <a href="{{ path('habitacao_edit', {'id': habitacao.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('habitacao_new') }}">Create new</a>
+{% endblock %}

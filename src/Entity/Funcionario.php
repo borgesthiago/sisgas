@@ -33,11 +33,6 @@ class Funcionario
     private $cpf;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $endereco;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Secretaria", inversedBy="secretaria")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -114,6 +109,12 @@ class Funcionario
      */
     private $coordenador;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Habitacao", inversedBy="funcionario", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $habitacao;
+
     
     public function getId()
     {
@@ -152,18 +153,6 @@ class Funcionario
     public function setCpf(string $cpf): self
     {
         $this->cpf = $cpf;
-
-        return $this;
-    }
-
-    public function getEndereco()
-    {
-        return $this->endereco;
-    }
-
-    public function setEndereco(string $endereco): self
-    {
-        $this->endereco = $endereco;
 
         return $this;
     }
@@ -349,6 +338,18 @@ class Funcionario
     public function setCoordenador(?string $coordenador): self
     {
         $this->coordenador = $coordenador;
+
+        return $this;
+    }
+
+    public function getHabitacao(): ?Habitacao
+    {
+        return $this->habitacao;
+    }
+
+    public function setHabitacao(Habitacao $habitacao): self
+    {
+        $this->habitacao = $habitacao;
 
         return $this;
     }
