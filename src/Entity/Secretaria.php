@@ -44,14 +44,20 @@ class Secretaria
     private $secretaria;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SubSecretaria", mappedBy="secretaria", orphanRemoval=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Secretaria", inversedBy="secretariaFilhos")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $subsecretaria;
+    private $secretariaPai;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Secretaria", mappedBy="secretariaPai")
+     */
+    private $secretariaFilhos;
 
     public function __construct()
     {
         $this->secretaria = new ArrayCollection();
-        $this->subsecretaria = new ArrayCollection();
+        $this->secretarias = new ArrayCollection();
     }
 
     public function getId()
@@ -138,34 +144,52 @@ class Secretaria
         return $this;
     }
 
-    /**
-     * @return Collection|SubSecretaria[]
-     */
-    public function getSubsecretaria(): Collection
+    public function getSecretariaPai(): ?self
     {
-        return $this->subsecretaria;
+        return $this->secretariaPai;
     }
 
-    public function addSubsecretarium(SubSecretaria $subsecretarium): self
+    public function setSecretariaPai(?self $secretariaPai): self
     {
-        if (!$this->subsecretaria->contains($subsecretarium)) {
-            $this->subsecretaria[] = $subsecretarium;
-            $subsecretarium->setSecretaria($this);
+        $this->secretariaPai = $secretariaPai;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getSecretarias(): Collection
+    {
+        return $this->secretarias;
+    }
+
+    public function addSecretaria(self $secretaria): self
+    {
+        if (!$this->secretarias->contains($secretaria)) {
+            $this->secretarias[] = $secretaria;
+            $secretaria->setSecretariaPai($this);
         }
 
         return $this;
     }
 
-    public function removeSubsecretarium(SubSecretaria $subsecretarium): self
+    public function removeSecretaria(self $secretaria): self
     {
-        if ($this->subsecretaria->contains($subsecretarium)) {
-            $this->subsecretaria->removeElement($subsecretarium);
+        if ($this->secretarias->contains($secretaria)) {
+            $this->secretarias->removeElement($secretaria);
             // set the owning side to null (unless already changed)
-            if ($subsecretarium->getSecretaria() === $this) {
-                $subsecretarium->setSecretaria(null);
+            if ($secretaria->getSecretariaPai() === $this) {
+                $secretaria->setSecretariaPai(null);
             }
         }
 
         return $this;
     }
+
+    public function __toString()
+    {    
+        return (string) $this->getNome();
+    }
+
 }

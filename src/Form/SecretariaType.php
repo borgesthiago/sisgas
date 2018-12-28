@@ -13,9 +13,14 @@ class SecretariaType extends AbstractType
     {
         $builder
             ->add('nome')
-            ->add('endereco')
+            ->add('endereco', null, array(
+                'label' => 'Endereço'
+            ))
             ->add('telefone')
             ->add('email')
+            ->add('secretariaPai', null, array(
+                'label' => 'Secretaria Responsável'
+            ))
         ;
     }
 

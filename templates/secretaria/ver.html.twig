@@ -27,6 +27,12 @@
                 <th>Email</th>
                 <td>{{ secretarium.email }}</td>
             </tr>
+            {% if secretarium.secretariaPai != null %}
+            <tr>
+                <th>Resp</th>
+                <td>{{ secretarium.secretariaPai }}</td>
+            </tr>
+            {% endif %}
         </tbody>
     </table>
 
