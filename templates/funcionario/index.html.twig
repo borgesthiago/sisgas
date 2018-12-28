@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Funcionario{% endblock %}
+
+{% block body %}
+ <div class="espaco">
+    <h3>Listagem de Funcionarios</h3>  
+    <div class="direita">
+        <a href="{{ path('funcionario_novo') }}"><button type="button" class="ui primary button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo</button></a>
+    </div>
+    <table class="ui celled table">
+        <thead>
+            <tr class="ui center aligned">
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Matricula</th>
+                <th>Cpf</th>
+                <th>Secretaria</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for funcionario in funcionarios %}
+            <tr class="ui center aligned">
+                <td>{{ funcionario.id }}</td>
+                <td>{{ funcionario.nome }}</td>
+                <td>{{ funcionario.matricula }}</td>
+                <td>{{ funcionario.cpf }}</td>
+                 <td>{{ funcionario.secretaria }}</td>
+                <td>
+                    {% if funcionario.status == 1 %}
+                        <i class="check circle green icon"></i> Ativo
+                    {% else %} 
+                        <i class="ban red icon"></i> Inativo 
+                    {% endif %}</td>
+                <td>
+                <div class="ui small basic icon buttons">
+                    <a href="{{ path('funcionario_ver', {'id': funcionario.id}) }}"><button class="ui button"><i class="file green icon"></i></button></a>
+                    <a href="{{ path('funcionario_editar', {'id': funcionario.id}) }}"><button class="ui button"><i class="edit blue icon"></i></button></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('funcionario_delete', {'id': funcionario.id}) }}"><button class="ui button"><i class="trash red icon"></i></button></a>
+                    {% endif %}
+                </div>                   
+                </td>
+            </tr>
+        {% else %}
+                <td colspan="6">nenhum registro encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Login{% endblock %}
+
+{% block body %}
+<div class="espaco">
+    <h1>Editar Login</h1>
+    <div class="ui form grid">
+        <div class="one wide">
+            <label>Nome</label>
+            <input type="text" value="{{ user.id }}" name="funcionario" readonly>
+        </div>
+    </div>
+    {{ include('user/_form.html.twig', {'button_label': 'Atualizar'}) }}
+
+<div class="container">
+<div class="col-md-12">
+    <div class="col-md-4">
+        <a href="{{ path('user_index') }}"><button type="button" class="ui black button"><i class="fa fa-arrow-circle-left"></i> Voltar</button></a>
+         {% if is_granted('ROLE_ADMIN') %}
+         {{ include('user/_delete_form.html.twig') }}
+         {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}

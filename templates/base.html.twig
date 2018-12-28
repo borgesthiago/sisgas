@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SisGAS - {% block title %}{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="{{ asset('assets/semantic.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/espaco.css') }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+         {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <div class="ui pointing menu">
+            <a class="active item" href="{{ path('dashboard') }}">
+                Home
+            </a>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="users blue icon"></i>
+                Funcionários <i class="dropdown icon"></i>
+                <div class="menu">
+                {% if is_granted('ROLE_USER') %}
+                    <a class="item" href="{{ path('funcionario_index') }}">Listar</a>
+                    <a class="item" href="{{ path('funcionario_novo') }}">Cadastrar</a>
+                {% endif %}
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <div class="divider"></div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        Salário
+                        <div class="menu">
+                            <a class="item" href="{{ path('remuneracao_index') }}">Listar</a>
+                        </div>
+                    </div>
+                    {% endif %} 
+                </div>
+                </div>
+            </div>
+             {% if is_granted('ROLE_ADMIN') %}
+            <div class="menu">
+                <div class="ui dropdown item"><i class="building brown icon"></i>
+                Secretarias <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="{{ path('secretaria_index') }}">Listar</a>
+                    <a class="item" href="{{ path('secretaria_novo') }}">Cadastrar</a>
+                </div>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="lock icon"></i>
+                Login <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="{{ path('user_index') }}">Listar</a>
+                    <a class="item" href="{{ path('user_novo') }}">Cadastrar</a>
+                </div>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="file icon"></i>
+                Relatórios <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="{{ path('relatorio_funcionario') }}">Funcionário</a>
+                    <a class="item" href="{{ path('relatorio_secretaria') }}">Secretaria</a>
+                </div>
+                </div>
+            </div>
+            {% endif %}
+            <div class="right menu"> 
+            <div class="item">
+            <i class="user blue icon"></i> {{ app.user.email }}            
+            </div>  
+                <div class="item">
+                    <div class="ui small basic icon buttons">
+                         <a href="{{ path('app_logout') }}"><button class="ui button"><i class="sign-out red icon"></i></button></a>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+        </div>
+        
+        <div class="container">
+        {% block body %}{% endblock %}
+        <script
+                src="https://code.jquery.com/jquery-3.1.1.min.js"
+                integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                crossorigin="anonymous"></script>
+        <script src="{{ asset('assets/semantic.min.js') }}"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+                integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+                crossorigin="anonymous"></script>
+          <script src="{{ asset('assets/js/drop.js') }}"></script>
+        
+        {% block javascripts %}{% endblock %}
+        </div>
+    </body>
+</html>

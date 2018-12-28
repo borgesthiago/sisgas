@@ -1,0 +1,37 @@
+ <div class="ui segment">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header">                 
+                               Ramal: {{ funcionario.secretaria.telefone|default('') }} 
+                            <div class="right floated meta">
+                                <i class="phone square icon"></i>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header"> 
+                        </h4>
+                        <div class="ui small feed">
+                            <div class="event">
+                                <div class="content">
+                                    <div class="summary">
+                                         <i class="envelope square icon"></i> {{ funcionario.user.email|default('Vazio') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event">
+                                <div class="content">
+                                    <div class="summary">
+                                        <i class="phone volume icon"></i> 
+                                        {{ funcionario.contato.telefone|default('Vazio') }}                                           
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" content">
+                        <i class="mobile alt icon"></i> {{ funcionario.contato.celular|default('Vazio') }}
+                    </div>
+                </div>
+                
+            </div>   

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Novo Funcionário{% endblock %}
+
+{% block body %}
+ <div class="espaco">
+ <div class="ui grid">
+        <div class="row">
+            <div class="eight wide column">
+                <h3>Adicionar Funcionário</h3>
+            </div>
+            <div class="eight wide column">
+
+            </div>
+        </div>
+    </div>
+    {{ include('funcionario/_form.html.twig') }}
+        
+    <a href="{{ path('funcionario_index') }}"><button type="button" class="ui button secondary"><i class="fa fa-arrow-circle-left"></i> Voltar</button></a>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
+{% endblock %}

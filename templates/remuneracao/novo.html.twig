@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Remuneração{% endblock %}
+
+{% block body %}
+<div class="espaco">
+ <div class="ui grid">
+        <div class="row">
+            <div class="eight wide column">
+                <h3>Adicionar Remuneração</h3>
+            </div>
+            <div class="eight wide column">
+
+            </div>
+        </div>
+    </div>
+
+    {{ include('remuneracao/_form.html.twig') }}
+
+     <a href="{{ path('remuneracao_index') }}"><button type="button" class="ui button secondary"><i class="fa fa-arrow-circle-left"></i> Voltar</button></a>
+
+</div>
+{% endblock %}

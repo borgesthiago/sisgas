@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Remuneracao{% endblock %}
+
+{% block body %}
+<div class="espaco">
+    <h1>Remuneracao</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ remuneracao.id }}</td>
+            </tr>
+            <tr>
+                <th>Salario</th>
+                <td>{{ remuneracao.salario }}</td>
+            </tr>
+            <tr>
+                <th>Gratificacao</th>
+                <td>{{ remuneracao.gratificacao }}</td>
+            </tr>
+            <tr>
+                <th>Desconto</th>
+                <td>{{ remuneracao.desconto }}</td>
+            </tr>
+            <tr>
+                <th>Funcionário</th>
+                <td>{{ remuneracao.funcionario }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('remuneracao_index') }}">back to list</a>
+
+    <a href="{{ path('remuneracao_editar', {'id': remuneracao.id}) }}">edit</a>
+
+    {{ include('remuneracao/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

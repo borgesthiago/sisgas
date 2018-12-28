@@ -1,0 +1,52 @@
+ <div class="ui segment">
+                <div class="ui card">
+                    <div class="content">
+                        <div class="header"> 
+                        {% if funcionario.remuneracao.salario|default('') %}
+                            R$ <a>{{ funcionario.remuneracao.salario|number_format(2, ',','.') }}</a>
+                        {% else %}
+                            R$ {{ funcionario.remuneracao.salario|default('0,00') }}
+                        {% endif %}
+                            <div class="right floated meta">
+                                <i class="money green icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <h4 class="ui sub header"> 
+                        </h4>
+                        <div class="ui small feed">
+                            <div class="event">
+                                <div class="content">
+                                    <div class="summary">
+                                    {% if funcionario.remuneracao.gratificacao|default('') %}
+                                        Gratificação R$: <a>{{ funcionario.remuneracao.gratificacao|number_format(2, ',','.') }}</a>
+                                    {% else %}
+                                       Gratificação R$: {{ funcionario.remuneracao.gratificacao|default('0,00') }}
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="event">
+                                <div class="content">
+                                    <div class="summary">
+                                       {% if funcionario.remuneracao.desconto|default('') %}
+                                        Desconto R$: <a>{{ funcionario.remuneracao.desconto|number_format(2, ',','.') }}</a>
+                                    {% else %}
+                                       Desconto R$: {{ funcionario.remuneracao.desconto|default('0,00') }}
+                                    {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" content"> 
+                        {% if funcionario.remuneracao.pagamento|default('') %}
+                            Salário Líquido R$: <a>{{ funcionario.remuneracao.pagamento|number_format(2, ',','.') }}</a>
+                        {% else %}
+                            Salário Líquido R$: {{ funcionario.remuneracao.pagamento|default('0,00') }}
+                        {% endif %}
+                    </div>
+                </div>
+                
+            </div>   

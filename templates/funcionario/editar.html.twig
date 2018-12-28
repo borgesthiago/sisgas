@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Funcionario{% endblock %}
+
+{% block body %}
+<div class="espaco">
+    <h3>Editar Funcionario</h3>
+
+    {{ include('funcionario/_form.html.twig', {'button_label': 'Atualizar'}) }}
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <a href="{{ path('funcionario_index') }}"><button type="button" class="ui button secondary"><i class="arrow circle left icon"></i> Voltar</button></a>
+                {% if is_granted('ROLE_ADMIN') %}
+                {{ include('funcionario/_delete_form.html.twig') }}
+                {% endif %}
+            </div>
+        </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
+{% endblock %}

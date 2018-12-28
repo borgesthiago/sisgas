@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Painel {% endblock %}
+
+{% block body %}
+
+<div class="ui grid">
+    <div class="espaco">
+        <div class="four wide column">
+            <div class="ui card">
+                <div class="content">
+                    <i class="right floated users blue icon"></i>
+                    <div class="header">Funcionários</div>
+                    <div class="description">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    Total
+                    <span class="right floated star">
+                        <h2>{{ totalFunc }}</h2>            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> {% if is_granted('ROLE_SUPER_ADMIN') %}
+     <div class="espaco">
+        <div class="four wide column">
+            <div class="ui card">
+                <div class="content">
+                    <i class="right floated money green icon"></i>
+                    <div class="header">Remunerações</div>
+                    <div class="description">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    Total
+                    <span class="right floated star">
+                        <h2>{{ totalRem |number_format(2, ',','.') }}</h2>            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div> {% endif %} {% if is_granted('ROLE_ADMIN') %}
+    <div class="espaco">
+        <div class="four wide column">
+            <div class="ui card">
+                <div class="content">
+                    <i class="right floated building brown icon"></i>
+                    <div class="header">Secretarias</div>
+                    <div class="description">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    Total
+                    <span class="right floated star">
+                        <h2>{{ totalSec }}</h2>            
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>{% endif %}
+    <div class="espaco">
+        <div class="four wide column">
+            <canvas id="myChart" width="400" height="300"></canvas>
+            <script>
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["Salários", "Gratificações", "Descontos"],
+                    datasets: [{
+                        label: '# R$ ',
+                        data: [{{ totalRem }}, {{ totalGra }}, {{ totalDes }}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}

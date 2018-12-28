@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Visualizar Secretaria{% endblock %}
+
+{% block body %}
+    <h1>Secretaria</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ secretarium.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ secretarium.nome }}</td>
+            </tr>
+            <tr>
+                <th>Endereco</th>
+                <td>{{ secretarium.endereco }}</td>
+            </tr>
+            <tr>
+                <th>Telefone</th>
+                <td>{{ secretarium.telefone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ secretarium.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('secretaria_index') }}"><button type="button" class="btn btn-sm btn-secondary"><i class="fa fa-arrow-circle-left"></i> Voltar</button></a>
+    <a href="{{ path('secretaria_editar', {'id': secretarium.id}) }}"><button type="button" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Editar</button></a>
+ {% if is_granted('ROLE_ADMIN') %}
+    {{ include('secretaria/_delete_form.html.twig') }}
+ {% endif %}
+{% endblock %}

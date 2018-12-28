@@ -1,0 +1,35 @@
+{% form_theme form 'form/form_div.html.twig' %}
+<div class="ui grid">
+    <div class="column">
+        {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+        <div class="fields">
+            {{ form_row(form.nome, {'attr': {'data-row-class': 'ten wide'}}) }}
+             {{ form_row(form.cpf, {'attr': {'data-row-class': 'four wide'}}) }}
+        </div>
+        <div class="fields">
+            {{ form_row(form.matricula, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.endereco, {'attr': {'data-row-class': 'eight wide'}}) }}
+            {{ form_row(form.tipo, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.status, {'attr': {'data-row-class': 'two wide'}}) }}
+        </div>
+        <div class="fields">
+            {{ form_row(form.secretaria, {'attr': {'data-row-class': 'six wide'}}) }}
+            {{ form_row(form.contato.telefone, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.contato.celular, {'attr': {'data-row-class': 'two wide'}}) }}
+        </div> 
+        <div class="fields">
+            {{ form_row(form.remuneracao.salario, {'attr': {'data-row-class': 'three wide'}}) }}
+            {{ form_row(form.remuneracao.gratificacao, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.remuneracao.desconto, {'attr': {'data-row-class': 'two wide'}}) }}
+            {{ form_row(form.admissao, {'attr': {'data-row-class': 'three wide'}}) }}            
+            {{ form_row(form.exoneracao, {'attr': {'data-row-class': 'three wide'}}) }}         
+                
+        </div> 
+        <div class="fields">
+            <div class="ui right floated buttons">
+                <button class="ui button">{{ button_label|default('Salvar') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

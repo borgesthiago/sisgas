@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Remuneracao{% endblock %}
+
+{% block body %}
+    <h1>Edit Remuneracao</h1>
+
+    {{ include('remuneracao/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('remuneracao_index') }}">back to list</a>
+
+    {{ include('remuneracao/_delete_form.html.twig') }}
+{% endblock %}
