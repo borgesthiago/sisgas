@@ -24,7 +24,7 @@ class Secretaria
     private $nome;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $endereco;
 
@@ -54,10 +54,21 @@ class Secretaria
      */
     private $secretariaFilhos;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $equipamento;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Servicos", inversedBy="secretarias", cascade={"persist", "remove"})
+     */
+    private $servico;
+
     public function __construct()
     {
         $this->secretaria = new ArrayCollection();
         $this->secretarias = new ArrayCollection();
+        $this->servico = new ArrayCollection();
     }
 
     public function getId()
@@ -190,6 +201,52 @@ class Secretaria
     public function __toString()
     {    
         return (string) $this->getNome();
+    }
+
+    public function getEquipamento(): ?bool
+    {
+        return $this->equipamento;
+    }
+
+    public function setEquipamento(?bool $equipamento): self
+    {
+        $this->equipamento = $equipamento;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Servicos[]
+     */
+    public function getServicos(): Collection
+    {
+        return $this->servicos;
+    }
+
+    /**
+     * @return Collection|Servicos[]
+     */
+    public function getServico(): Collection
+    {
+        return $this->servico;
+    }
+
+    public function addServico(Servicos $servico): self
+    {
+        if (!$this->servico->contains($servico)) {
+            $this->servico[] = $servico;
+        }
+
+        return $this;
+    }
+
+    public function removeServico(Servicos $servico): self
+    {
+        if ($this->servico->contains($servico)) {
+            $this->servico->removeElement($servico);
+        }
+
+        return $this;
     }
 
 }

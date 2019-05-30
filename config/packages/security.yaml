@@ -20,14 +20,16 @@ security:
                 authenticators:
                     - App\Security\LoginFormAuthenticator
             logout:
-                path:   app_logout
+                path: app_logout
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/finalizar_cadastro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/resetar_senha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-       # - { path: ^/resetar_senha_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/finalizar_cadastro, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetar_senha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetar_senha_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/funcionario, roles: ROLE_USER }
         - { path: ^/secretaria, roles: ROLE_USER }
+        - { path: ^/usuario, roles: ROLE_USER }
+        - { path: ^/servicos, roles: ROLE_USER }
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/remuneracao, roles: ROLE_ADMIN }
         - { path: ^/user, roles: ROLE_ADMIN }

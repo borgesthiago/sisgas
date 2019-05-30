@@ -30,7 +30,9 @@ class UserType extends AbstractType
             'label' => 'Senha',
             'required' => false
         ));
-        $builder->add('funcionario', HiddenType::class);
+        $builder->add('funcionario', null, [
+            'required' => false
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

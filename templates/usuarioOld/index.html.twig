@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuario index{% endblock %}
+
+{% block body %}
+    <h1>Usuario index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Rg</th>
+                <th>OrgaoRg</th>
+                <th>DataNascimento</th>
+                <th>Email</th>
+                <th>Sexo</th>
+                <th>Pcd</th>
+                <th>Naturalidade</th>
+                <th>Profissao</th>
+                <th>Ocupacao</th>
+                <th>Renda</th>
+                <th>Ctps</th>
+                <th>SerieCtps</th>
+                <th>Escolaridade</th>
+                <th>Nis</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.cpf }}</td>
+                <td>{{ usuario.rg }}</td>
+                <td>{{ usuario.orgaoRg }}</td>
+                <td>{{ usuario.dataNascimento ? usuario.dataNascimento|date('Y-m-d') : '' }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.sexo }}</td>
+                <td>{{ usuario.pcd }}</td>
+                <td>{{ usuario.naturalidade }}</td>
+                <td>{{ usuario.profissao }}</td>
+                <td>{{ usuario.ocupacao }}</td>
+                <td>{{ usuario.renda }}</td>
+                <td>{{ usuario.ctps }}</td>
+                <td>{{ usuario.serieCtps }}</td>
+                <td>{{ usuario.escolaridade }}</td>
+                <td>{{ usuario.nis }}</td>
+                <td>
+                    <a href="{{ path('usuario_show', {'id': usuario.id}) }}">show</a>
+                    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('usuario_new') }}">Create new</a>
+{% endblock %}

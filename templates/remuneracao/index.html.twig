@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Funcionário</th>
                 <th>Salario</th>
                 <th>Gratificacao</th>
                 <th>Desconto</th>
@@ -19,6 +20,7 @@
         {% for remuneracao in remuneracaos %}
             <tr>
                 <td>{{ remuneracao.id }}</td>
+                <td>{{ remuneracao.funcionario.nome }}</td>
                 <td>R$ {{ remuneracao.salario |number_format(2, ',', '.') }}</td>
                 <td>R$ {{ remuneracao.gratificacao |number_format(2, ',', '.') }}</td>
                 <td>R$ {{ remuneracao.desconto |number_format(2, ',', '.')  }}</td>

@@ -23,7 +23,11 @@
         {% for secretarium in secretarias %}
             <tr>
                 <td>{{ secretarium.id }}</td>
+                {% if secretarium.equipamento == 1 %}
+                <td>Equipamento {{ secretarium.nome }}</td>
+                {% else %}
                 <td>{{ secretarium.nome }}</td>
+                {% endif %}
                 <td>{{ secretarium.endereco }}</td>
                 <td>{{ secretarium.telefone }}</td>
                 <td>{{ secretarium.email }}</td>

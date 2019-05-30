@@ -33,6 +33,12 @@
                 <td>{{ secretarium.secretariaPai }}</td>
             </tr>
             {% endif %}
+                {% for servico in secretarium.servico %}
+                    <tr>
+                        <th>Serviço</th>
+                        <td>{{ servico.nome }}</td>
+                    </tr>
+                {% endfor %}
         </tbody>
     </table>
 

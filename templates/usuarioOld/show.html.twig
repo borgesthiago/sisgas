@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuario{% endblock %}
+
+{% block body %}
+    <h1>Usuario</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ usuario.id }}</td>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <td>{{ usuario.nome }}</td>
+            </tr>
+            <tr>
+                <th>Cpf</th>
+                <td>{{ usuario.cpf }}</td>
+            </tr>
+            <tr>
+                <th>Rg</th>
+                <td>{{ usuario.rg }}</td>
+            </tr>
+            <tr>
+                <th>OrgaoRg</th>
+                <td>{{ usuario.orgaoRg }}</td>
+            </tr>
+            <tr>
+                <th>DataNascimento</th>
+                <td>{{ usuario.dataNascimento ? usuario.dataNascimento|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ usuario.email }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ usuario.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Pcd</th>
+                <td>{{ usuario.pcd }}</td>
+            </tr>
+            <tr>
+                <th>Naturalidade</th>
+                <td>{{ usuario.naturalidade }}</td>
+            </tr>
+            <tr>
+                <th>Profissao</th>
+                <td>{{ usuario.profissao }}</td>
+            </tr>
+            <tr>
+                <th>Ocupacao</th>
+                <td>{{ usuario.ocupacao }}</td>
+            </tr>
+            <tr>
+                <th>Renda</th>
+                <td>{{ usuario.renda }}</td>
+            </tr>
+            <tr>
+                <th>Ctps</th>
+                <td>{{ usuario.ctps }}</td>
+            </tr>
+            <tr>
+                <th>SerieCtps</th>
+                <td>{{ usuario.serieCtps }}</td>
+            </tr>
+            <tr>
+                <th>Escolaridade</th>
+                <td>{{ usuario.escolaridade }}</td>
+            </tr>
+            <tr>
+                <th>Nis</th>
+                <td>{{ usuario.nis }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('usuario_index') }}">back to list</a>
+
+    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}">edit</a>
+
+    {{ include('usuario/_delete_form.html.twig') }}
+{% endblock %}
