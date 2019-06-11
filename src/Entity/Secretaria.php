@@ -64,11 +64,17 @@ class Secretaria
      */
     private $servico;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Documento", mappedBy="origem")
+     */
+    private $documentos;
+
     public function __construct()
     {
         $this->secretaria = new ArrayCollection();
         $this->secretarias = new ArrayCollection();
         $this->servico = new ArrayCollection();
+        $this->documentos = new ArrayCollection();
     }
 
     public function getId()
@@ -244,6 +250,37 @@ class Secretaria
     {
         if ($this->servico->contains($servico)) {
             $this->servico->removeElement($servico);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Documento[]
+     */
+    public function getDocumentos(): Collection
+    {
+        return $this->documentos;
+    }
+
+    public function addDocumento(Documento $documento): self
+    {
+        if (!$this->documentos->contains($documento)) {
+            $this->documentos[] = $documento;
+            $documento->setOrigem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumento(Documento $documento): self
+    {
+        if ($this->documentos->contains($documento)) {
+            $this->documentos->removeElement($documento);
+            // set the owning side to null (unless already changed)
+            if ($documento->getOrigem() === $this) {
+                $documento->setOrigem(null);
+            }
         }
 
         return $this;

@@ -96,6 +96,11 @@ class Usuario
      */
     private $nis;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Documento", inversedBy="usuario")
+     */
+    private $documento;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -289,6 +294,18 @@ class Usuario
     public function setNis(?string $nis): self
     {
         $this->nis = $nis;
+
+        return $this;
+    }
+
+    public function getDocumento(): ?Documento
+    {
+        return $this->documento;
+    }
+
+    public function setDocumento(?Documento $documento): self
+    {
+        $this->documento = $documento;
 
         return $this;
     }
