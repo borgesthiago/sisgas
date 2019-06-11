@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tramitacao{% endblock %}
+
+{% block body %}
+    <h1>Tramitacao</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ tramitacao.id }}</td>
+            </tr>
+            <tr>
+                <th>DataInicio</th>
+                <td>{{ tramitacao.dataInicio ? tramitacao.dataInicio|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DataFim</th>
+                <td>{{ tramitacao.dataFim ? tramitacao.dataFim|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Observacao</th>
+                <td>{{ tramitacao.observacao }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('tramitacao_index') }}">back to list</a>
+
+    <a href="{{ path('tramitacao_edit', {'id': tramitacao.id}) }}">edit</a>
+
+    {{ include('tramitacao/_delete_form.html.twig') }}
+{% endblock %}

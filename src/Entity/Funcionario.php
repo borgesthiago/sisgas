@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator as AppAssert;
 /**
@@ -114,6 +116,22 @@ class Funcionario
      * @ORM\JoinColumn(nullable=false)
      */
     private $habitacao;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="funcionarioOrigem")
+     */
+    private $tramitacoes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="funcionarioDestino")
+     */
+    private $tramitacaos;
+
+    public function __construct()
+    {
+        $this->tramitacoes = new ArrayCollection();
+        $this->tramitacaos = new ArrayCollection();
+    }
 
     
     public function getId()
@@ -350,6 +368,68 @@ class Funcionario
     public function setHabitacao(Habitacao $habitacao): self
     {
         $this->habitacao = $habitacao;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacoes(): Collection
+    {
+        return $this->tramitacoes;
+    }
+
+    public function addTramitaco(Tramitacao $tramitaco): self
+    {
+        if (!$this->tramitacoes->contains($tramitaco)) {
+            $this->tramitacoes[] = $tramitaco;
+            $tramitaco->setFuncionarioOrigem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitaco(Tramitacao $tramitaco): self
+    {
+        if ($this->tramitacoes->contains($tramitaco)) {
+            $this->tramitacoes->removeElement($tramitaco);
+            // set the owning side to null (unless already changed)
+            if ($tramitaco->getFuncionarioOrigem() === $this) {
+                $tramitaco->setFuncionarioOrigem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacaos(): Collection
+    {
+        return $this->tramitacaos;
+    }
+
+    public function addTramitacao(Tramitacao $tramitacao): self
+    {
+        if (!$this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos[] = $tramitacao;
+            $tramitacao->setFuncionarioDestino($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitacao(Tramitacao $tramitacao): self
+    {
+        if ($this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos->removeElement($tramitacao);
+            // set the owning side to null (unless already changed)
+            if ($tramitacao->getFuncionarioDestino() === $this) {
+                $tramitacao->setFuncionarioDestino(null);
+            }
+        }
 
         return $this;
     }

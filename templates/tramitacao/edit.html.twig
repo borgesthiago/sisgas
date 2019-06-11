@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tramitacao{% endblock %}
+
+{% block body %}
+    <h1>Edit Tramitacao</h1>
+
+    {{ include('tramitacao/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('tramitacao_index') }}">back to list</a>
+
+    {{ include('tramitacao/_delete_form.html.twig') }}
+{% endblock %}

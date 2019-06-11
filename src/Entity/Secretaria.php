@@ -69,12 +69,24 @@ class Secretaria
      */
     private $documentos;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="origem")
+     */
+    private $tramitacoes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="destino")
+     */
+    private $tramitacaos;
+
     public function __construct()
     {
         $this->secretaria = new ArrayCollection();
         $this->secretarias = new ArrayCollection();
         $this->servico = new ArrayCollection();
         $this->documentos = new ArrayCollection();
+        $this->tramitacoes = new ArrayCollection();
+        $this->tramitacaos = new ArrayCollection();
     }
 
     public function getId()
@@ -280,6 +292,68 @@ class Secretaria
             // set the owning side to null (unless already changed)
             if ($documento->getOrigem() === $this) {
                 $documento->setOrigem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacoes(): Collection
+    {
+        return $this->tramitacoes;
+    }
+
+    public function addTramitaco(Tramitacao $tramitaco): self
+    {
+        if (!$this->tramitacoes->contains($tramitaco)) {
+            $this->tramitacoes[] = $tramitaco;
+            $tramitaco->setOrigem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitaco(Tramitacao $tramitaco): self
+    {
+        if ($this->tramitacoes->contains($tramitaco)) {
+            $this->tramitacoes->removeElement($tramitaco);
+            // set the owning side to null (unless already changed)
+            if ($tramitaco->getOrigem() === $this) {
+                $tramitaco->setOrigem(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacaos(): Collection
+    {
+        return $this->tramitacaos;
+    }
+
+    public function addTramitacao(Tramitacao $tramitacao): self
+    {
+        if (!$this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos[] = $tramitacao;
+            $tramitacao->setDestino($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitacao(Tramitacao $tramitacao): self
+    {
+        if ($this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos->removeElement($tramitacao);
+            // set the owning side to null (unless already changed)
+            if ($tramitacao->getDestino() === $this) {
+                $tramitacao->setDestino(null);
             }
         }
 

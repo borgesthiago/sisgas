@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tramitacao index{% endblock %}
+
+{% block body %}
+    <h1>Tramitacao index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DataInicio</th>
+                <th>DataFim</th>
+                <th>Observacao</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tramitacao in tramitacaos %}
+            <tr>
+                <td>{{ tramitacao.id }}</td>
+                <td>{{ tramitacao.dataInicio ? tramitacao.dataInicio|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ tramitacao.dataFim ? tramitacao.dataFim|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ tramitacao.observacao }}</td>
+                <td>
+                    <a href="{{ path('tramitacao_show', {'id': tramitacao.id}) }}">show</a>
+                    <a href="{{ path('tramitacao_edit', {'id': tramitacao.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('tramitacao_new') }}">Create new</a>
+{% endblock %}

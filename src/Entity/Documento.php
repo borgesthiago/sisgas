@@ -63,10 +63,16 @@ class Documento
      */
     private $numeroReiteracao;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="documento")
+     */
+    private $tramitacao;
+
     public function __construct()
     {
         $this->usuario = new ArrayCollection();
         $this->numeroReiteracao = new ArrayCollection();
+        $this->tramitacao = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +212,37 @@ class Documento
             // set the owning side to null (unless already changed)
             if ($numeroReiteracao->getNumeroReiteracao() === $this) {
                 $numeroReiteracao->setNumeroReiteracao(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacao(): Collection
+    {
+        return $this->tramitacao;
+    }
+
+    public function addTramitacao(Tramitacao $tramitacao): self
+    {
+        if (!$this->tramitacao->contains($tramitacao)) {
+            $this->tramitacao[] = $tramitacao;
+            $tramitacao->setDocumento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitacao(Tramitacao $tramitacao): self
+    {
+        if ($this->tramitacao->contains($tramitacao)) {
+            $this->tramitacao->removeElement($tramitacao);
+            // set the owning side to null (unless already changed)
+            if ($tramitacao->getDocumento() === $this) {
+                $tramitacao->setDocumento(null);
             }
         }
 
