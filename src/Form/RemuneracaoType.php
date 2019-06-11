@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Form;
-use App\Entity\Funcionario;
 use App\Entity\Remuneracao;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RemuneracaoType extends AbstractType
 {

@@ -40,18 +40,30 @@
              {% if is_granted('ROLE_ADMIN') %}
             <div class="menu">
                 <div class="ui dropdown item"><i class="building brown icon"></i>
-                Secretarias <i class="dropdown icon"></i>
-                <div class="menu">
-                    <a class="item" href="{{ path('secretaria_index') }}">Listar</a>
-                    <a class="item" href="{{ path('secretaria_novo') }}">Cadastrar</a>
-                      <div class="divider"></div>
-                    <div class="item">
-                        <i class="dropdown icon"></i>
-                        SubSecretaria
-                        <div class="menu">
-                            <a class="item" href="">Listar</a>
-                        </div>
+                    Secretarias <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{{ path('secretaria_index') }}">Listar</a>
+                        <a class="item" href="{{ path('secretaria_novo') }}">Cadastrar</a>
+                                            
                     </div>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="building brown icon"></i>
+                    Serviços <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{{ path('servicos_index') }}">Listar</a>
+                        <a class="item" href="{{ path('servicos_index') }}">Cadastrar</a>
+                                            
+                    </div>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="user icon"></i>
+                Usuários <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="{{ path('usuario_index') }}">Listar</a>
+                    <a class="item" href="{{ path('usuario_new') }}">Cadastrar</a>
                 </div>
                 </div>
             </div>
@@ -76,7 +88,7 @@
             {% endif %}
             <div class="right menu"> 
             <div class="item">
-            <i class="user blue icon"></i> {{ app.user.email }}            
+            <i class="user blue icon"></i> {{ app.user.funcionario ? app.user.funcionario.nome : app.user.email }}            
             </div>  
                 <div class="item">
                     <div class="ui small basic icon buttons">

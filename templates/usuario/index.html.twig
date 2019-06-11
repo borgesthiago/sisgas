@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Usuario index{% endblock %}
+
+{% block body %}
+ <div class="espaco">
+    <h3>Listagem de Usuários</h3>  
+    <div class="direita">
+        <a href="{{ path('usuario_new') }}"><button type="button" class="ui primary button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo</button></a>
+    </div>
+   <table class="ui celled table">
+        <thead>
+            <tr class="ui center aligned">
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Data Nascimento</th>
+                <th>PCD</th>
+                <th>NIS</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.cpf }}</td>
+                <td>{{ usuario.dataNascimento ? usuario.dataNascimento|date('d/m/Y') : '' }}</td>
+                <td>{{ usuario.pcd ? usuario.pcd : 'Não' }}</td>
+                <td>{{ usuario.nis }}</td>
+                <td class="ui center aligned">
+                     <div class="ui small basic icon buttons">
+                    <a href="{{ path('usuario_show', {'id': usuario.id}) }}"><button class="ui button"><i class="file green icon"></i></button></a>
+                    <a href="{{ path('usuario_edit', {'id': usuario.id}) }}"><button class="ui button"><i class="edit blue icon"></i></button></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('usuario_delete', {'id': usuario.id}) }}"><button class="ui button"><i class="trash red icon"></i></button></a>
+                    {% endif %}
+                </div> 
+                </td>
+            </tr>
+       {% else %}
+                <td colspan="6">nenhum registro encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery.mask.min.js') }}"></script>
+{% endblock %}
