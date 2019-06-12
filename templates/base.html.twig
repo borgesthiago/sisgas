@@ -18,32 +18,38 @@
             </a>
             <div class="menu">
                 <div class="ui dropdown item"><i class="users blue icon"></i>
-                Funcionários <i class="dropdown icon"></i>
-                <div class="menu">
-                {% if is_granted('ROLE_USER') %}
-                    <a class="item" href="{{ path('funcionario_index') }}">Listar</a>
-                    <a class="item" href="{{ path('funcionario_novo') }}">Cadastrar</a>
-                {% endif %}
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <div class="divider"></div>
-                    <div class="item">
-                        <i class="dropdown icon"></i>
-                        Salário
-                        <div class="menu">
-                            <a class="item" href="{{ path('remuneracao_index') }}">Listar</a>
+                    Funcionários <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{{ path('funcionario_index') }}">Listar</a>
+                        <a class="item" href="{{ path('funcionario_novo') }}">Cadastrar</a>
+                    
+                        <div class="divider"></div>
+                        <div class="item">
+                            <i class="dropdown icon"></i>
+                            Salário
+                            <div class="menu">
+                                <a class="item" href="{{ path('remuneracao_index') }}">Listar</a>
+                            </div>
                         </div>
                     </div>
-                    {% endif %} 
-                </div>
                 </div>
             </div>
-             {% if is_granted('ROLE_ADMIN') %}
             <div class="menu">
                 <div class="ui dropdown item"><i class="building brown icon"></i>
-                    Secretarias <i class="dropdown icon"></i>
+                    Órgãos <i class="dropdown icon"></i>
                     <div class="menu">
                         <a class="item" href="{{ path('secretaria_index') }}">Listar</a>
                         <a class="item" href="{{ path('secretaria_novo') }}">Cadastrar</a>
+                                            
+                    </div>
+                </div>
+            </div>
+            <div class="menu">
+                <div class="ui dropdown item"><i class="file red icon"></i>
+                    Documentos <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="{{ path('documento_index') }}">Listar</a>
+                        <a class="item" href="{{ path('documento_new') }}">Cadastrar</a>
                                             
                     </div>
                 </div>
@@ -85,7 +91,6 @@
                 </div>
                 </div>
             </div>
-            {% endif %}
             <div class="right menu"> 
             <div class="item">
             <i class="user blue icon"></i> {{ app.user.funcionario ? app.user.funcionario.nome : app.user.email }}            

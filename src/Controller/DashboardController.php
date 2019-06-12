@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Controller;
+
 use App\Repository\SecretariaRepository;
 use App\Repository\FuncionarioRepository;
 use App\Repository\RemuneracaoRepository;
-use App\Repository\UsuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -16,10 +16,13 @@ class DashboardController extends AbstractController
     /**
      * @Route("/", name="dashboard")
      */
-    public function index(SecretariaRepository $totalSecretaria, FuncionarioRepository $totalFuncionario, 
-    RemuneracaoRepository $totalRemuneracao, RemuneracaoRepository $totalGratificacao, 
-    RemuneracaoRepository $totalDesconto)
-    {
+    public function index(
+        SecretariaRepository $totalSecretaria,
+        FuncionarioRepository $totalFuncionario,
+        RemuneracaoRepository $totalRemuneracao,
+        RemuneracaoRepository $totalGratificacao,
+        RemuneracaoRepository $totalDesconto
+    ) {
      
         $totalSec = $totalSecretaria->countAll();
         $totalFunc = $totalFuncionario->countAll();
@@ -27,13 +30,16 @@ class DashboardController extends AbstractController
         $totalGra = $totalGratificacao->countGra();
         $totalDesc = $totalDesconto->countDesc();
        
-        return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
-            'totalSec' => $totalSec,
-            'totalFunc' => $totalFunc,
-            'totalRem'  => $totalRem,
-            'totalGra'  => $totalGra,
-            'totalDes'  => $totalDesc
-        ]);
+        return $this->render (
+            'dashboard/index.html.twig',
+            [
+                'controller_name' => 'DashboardController',
+                'totalSec' => $totalSec,
+                'totalFunc' => $totalFunc,
+                'totalRem'  => $totalRem,
+                'totalGra'  => $totalGra,
+                'totalDes'  => $totalDesc
+            ]
+        );
     }
 }

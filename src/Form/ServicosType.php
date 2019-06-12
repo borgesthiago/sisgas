@@ -14,13 +14,16 @@ class ServicosType extends AbstractType
     {
         $builder
             ->add('nome')
-            ->add('status', ChoiceType::class, array(
-                'required' => false,
-                'label' => 'Status',
-                'choices'  => array(
-                    'Ativo' => true,
-                    'Inativo' => false
-            )))
+            ->add('status', ChoiceType::class, 
+                [
+                    'required' => false,
+                    'label' => 'Status',
+                    'choices'  => array(
+                        'Ativo' => true,
+                        'Inativo' => false
+                    )
+                ]
+            )
             ->add('secretarias')
         ;
     }
