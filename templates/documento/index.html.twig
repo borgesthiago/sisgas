@@ -3,41 +3,58 @@
 {% block title %}Documento index{% endblock %}
 
 {% block body %}
-    <h1>Documento index</h1>
-
-    <table class="table">
+<div class="espaco">
+    <h3>Listagem de Documentos</h3>
+    <div class="direita">
+        <a href="{{ path('documento_new') }}"><button type="button" class="ui primary button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo</button></a>
+    </div>
+    <table class="ui celled table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Tipo</th>
-                <th>Numero</th>
-                <th>DataRecebido</th>
-                <th>Prazo</th>
-                <th>Reiteracao</th>
-                <th>actions</th>
+            <tr class="ui center aligned">
+                <th>Origem</th>
+                <th>Número</th>
+                <th>Data Recebido</th>
+                <th>Prazo <small>Estipulado</small></th>
+                <th>Tempo <small>Decorrido</small></th>
+                <th>Reiteração</th>
+                <th>Localização</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
         {% for documento in documentos %}
             <tr>
-                <td>{{ documento.id }}</td>
-                <td>{{ documento.tipo }}</td>
+                <td>{{ documento.origem }}</td>
                 <td>{{ documento.numero }}</td>
-                <td>{{ documento.dataRecebido ? documento.dataRecebido|date('Y-m-d') : '' }}</td>
+                <td>{{ documento.dataRecebido ? documento.dataRecebido|date('d/m/Y') : '' }}</td>
                 <td>{{ documento.prazo }}</td>
-                <td>{{ documento.reiteracao ? 'Yes' : 'No' }}</td>
+                <td>{{ documento.dataRecebido|time_diff }}</td>
+                <td>
+                    {% if documento.reiteracao == 1 %}
+                        {{documento.numeroReiteracao.numero}}
+                    {% else %}
+                        Não
+                    {% endif %}
+                </td>
+                <td>
+                    {% for tramitacao in documento.tramitacao %}
+                    {{ tramitacao.destino }}
+                    {% endfor %}
+                </td>
                 <td>
                     <a href="{{ path('documento_show', {'id': documento.id}) }}">show</a>
                     <a href="{{ path('documento_edit', {'id': documento.id}) }}">edit</a>
+                    <a href="{{ path('documento_encaminhar', {'id': documento.id}) }}" 
+                        class="ui compact icon positive encaminhar button" title="Encaminhar">
+                        <i class="arrow alt circle right icon"></i>
+                    </a>
                 </td>
+       {% else %}
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="6">nenhum registro encontrado</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('documento_new') }}">Create new</a>
+</div>
 {% endblock %}

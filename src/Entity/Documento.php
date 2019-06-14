@@ -64,7 +64,7 @@ class Documento
     private $numeroReiteracao;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="documento")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="documento", cascade={"persist", "remove"})
      */
     private $tramitacao;
 
@@ -247,5 +247,10 @@ class Documento
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTipo();
     }
 }

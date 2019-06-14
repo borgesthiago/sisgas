@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,16 +56,21 @@ class Tramitacao
     private $observacao;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Status", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $status;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Documento", inversedBy="tramitacao")
      * @ORM\JoinColumn(nullable=false)
      */
     private $documento;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="tramitacaos")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $status;
+
+    public function __construct()
+    {
+        $this->status = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,18 +161,6 @@ class Tramitacao
         return $this;
     }
 
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getDocumento(): ?Documento
     {
         return $this->documento;
@@ -174,6 +169,18 @@ class Tramitacao
     public function setDocumento(?Documento $documento): self
     {
         $this->documento = $documento;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

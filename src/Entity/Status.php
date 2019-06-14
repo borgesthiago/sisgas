@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +23,16 @@ class Status
      */
     private $descricao;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="status")
+     */
+    private $tramitacaos;
+
+    public function __construct()
+    {
+        $this->tramitacaos = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +46,37 @@ class Status
     public function setDescricao(string $descricao): self
     {
         $this->descricao = $descricao;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tramitacao[]
+     */
+    public function getTramitacaos(): Collection
+    {
+        return $this->tramitacaos;
+    }
+
+    public function addTramitacao(Tramitacao $tramitacao): self
+    {
+        if (!$this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos[] = $tramitacao;
+            $tramitacao->setStatus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTramitacao(Tramitacao $tramitacao): self
+    {
+        if ($this->tramitacaos->contains($tramitacao)) {
+            $this->tramitacaos->removeElement($tramitacao);
+            // set the owning side to null (unless already changed)
+            if ($tramitacao->getStatus() === $this) {
+                $tramitacao->setStatus(null);
+            }
+        }
 
         return $this;
     }

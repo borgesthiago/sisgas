@@ -13,3 +13,13 @@
     margin-right: auto;
     margin-bottom: 5px;
 }
+select[readonly] {
+    opacity: .45;
+    pointer-events: none;
+    touch-action: none;
+}
+input[readonly] {
+    opacity: .45;
+    pointer-events: none;
+    touch-action: none;
+}
