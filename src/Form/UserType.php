@@ -3,16 +3,13 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\Secretaria;
+use App\Enum\RolesEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class UserType extends AbstractType
 {
@@ -22,7 +19,7 @@ class UserType extends AbstractType
             ->add('email', EmailType::class)
             
             ->add('roles',  ChoiceType::class, array(
-                'choices' => ['Administrador' => '["ROLE_SUPER_ADMIN"]', 'Gerente' => 'ROLE_ADMIN', 'Operador' => 'ROLE_USER'],                
+                'choices' => RolesEnum::getRoles(),
                 'multiple' => true,
                 'label' => 'Nível'
             ));

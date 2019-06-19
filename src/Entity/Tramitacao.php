@@ -61,15 +61,9 @@ class Tramitacao
      */
     private $documento;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="tramitacaos")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $status;
-
     public function __construct()
     {
-        $this->status = new ArrayCollection();
+    
     }
 
     public function getId(): ?int
@@ -173,15 +167,4 @@ class Tramitacao
         return $this;
     }
 
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
 }

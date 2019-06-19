@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -38,6 +40,16 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=true)
      */
     private $funcionario;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StatusDocumento", mappedBy="user")
+     */
+    private $statusDocumentos;
+
+    public function __construct()
+    {
+        $this->statusDocumentos = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -129,6 +141,37 @@ class User implements UserInterface
         // set the owning side of the relation if necessary
         if ($this !== $funcionario->getUser()) {
             $funcionario->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StatusDocumento[]
+     */
+    public function getStatusDocumentos(): Collection
+    {
+        return $this->statusDocumentos;
+    }
+
+    public function addStatusDocumento(StatusDocumento $statusDocumento): self
+    {
+        if (!$this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos[] = $statusDocumento;
+            $statusDocumento->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatusDocumento(StatusDocumento $statusDocumento): self
+    {
+        if ($this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos->removeElement($statusDocumento);
+            // set the owning side to null (unless already changed)
+            if ($statusDocumento->getUser() === $this) {
+                $statusDocumento->setUser(null);
+            }
         }
 
         return $this;

@@ -65,14 +65,35 @@ class Documento
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="documento", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "DESC"})
      */
     private $tramitacao;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StatusDocumento", mappedBy="documento", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"id" = "DESC"})
+     */
+    private $statusDocumentos;
+
+    public function getUltimoStatus()
+    {
+        return $this->statusDocumentos[0]->getStatus();
+    }
+
+    public function getUltimoDestino()
+    {
+        if (count($this->tramitacao) == 0) {
+            return null;
+        }
+        return $this->tramitacao[0]->getDestino();
+    }
 
     public function __construct()
     {
         $this->usuario = new ArrayCollection();
         $this->numeroReiteracao = new ArrayCollection();
         $this->tramitacao = new ArrayCollection();
+        $this->statusDocumentos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -251,6 +272,38 @@ class Documento
 
     public function __toString()
     {
-        return $this->getTipo();
+        // return $this->getTipo();
+        return $this->getNumero();
+    }
+
+    /**
+     * @return Collection|StatusDocumento[]
+     */
+    public function getStatusDocumentos(): Collection
+    {
+        return $this->statusDocumentos;
+    }
+
+    public function addStatusDocumento(StatusDocumento $statusDocumento): self
+    {
+        if (!$this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos[] = $statusDocumento;
+            $statusDocumento->setDocumento($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatusDocumento(StatusDocumento $statusDocumento): self
+    {
+        if ($this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos->removeElement($statusDocumento);
+            // set the owning side to null (unless already changed)
+            if ($statusDocumento->getDocumento() === $this) {
+                $statusDocumento->setDocumento(null);
+            }
+        }
+
+        return $this;
     }
 }

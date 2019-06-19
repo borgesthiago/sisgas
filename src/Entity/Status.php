@@ -24,13 +24,14 @@ class Status
     private $descricao;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Tramitacao", mappedBy="status")
+     * @ORM\OneToMany(targetEntity="App\Entity\StatusDocumento", mappedBy="status")
      */
-    private $tramitacaos;
+    private $statusDocumentos;
 
     public function __construct()
     {
         $this->tramitacaos = new ArrayCollection();
+        $this->statusDocumentos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,33 +52,34 @@ class Status
     }
 
     /**
-     * @return Collection|Tramitacao[]
+     * @return Collection|StatusDocumento[]
      */
-    public function getTramitacaos(): Collection
+    public function getStatusDocumentos(): Collection
     {
-        return $this->tramitacaos;
+        return $this->statusDocumentos;
     }
 
-    public function addTramitacao(Tramitacao $tramitacao): self
+    public function addStatusDocumento(StatusDocumento $statusDocumento): self
     {
-        if (!$this->tramitacaos->contains($tramitacao)) {
-            $this->tramitacaos[] = $tramitacao;
-            $tramitacao->setStatus($this);
+        if (!$this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos[] = $statusDocumento;
+            $statusDocumento->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeTramitacao(Tramitacao $tramitacao): self
+    public function removeStatusDocumento(StatusDocumento $statusDocumento): self
     {
-        if ($this->tramitacaos->contains($tramitacao)) {
-            $this->tramitacaos->removeElement($tramitacao);
+        if ($this->statusDocumentos->contains($statusDocumento)) {
+            $this->statusDocumentos->removeElement($statusDocumento);
             // set the owning side to null (unless already changed)
-            if ($tramitacao->getStatus() === $this) {
-                $tramitacao->setStatus(null);
+            if ($statusDocumento->getStatus() === $this) {
+                $statusDocumento->setStatus(null);
             }
         }
 
         return $this;
     }
+
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
@@ -8,14 +10,21 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181228184920 extends AbstractMigration
+final class Version20190619181601 extends AbstractMigration
 {
+    public function getDescription() : string
+    {
+        return '';
+    }
+
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE equipamento ADD endereco VARCHAR(255) DEFAULT NULL, ADD bairro VARCHAR(100) DEFAULT NULL, ADD telefone VARCHAR(20) DEFAULT NULL, ADD email VARCHAR(100) DEFAULT NULL');
+        $this->addSql('ALTER TABLE status DROP FOREIGN KEY FK_7B00651C8F7ED78A');
+        $this->addSql('DROP INDEX IDX_7B00651C8F7ED78A ON status');
+        $this->addSql('ALTER TABLE status DROP status_documento_id');
     }
 
     public function down(Schema $schema) : void
@@ -23,6 +32,8 @@ final class Version20181228184920 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE equipamento DROP endereco, DROP bairro, DROP telefone, DROP email');
+        $this->addSql('ALTER TABLE status ADD status_documento_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE status ADD CONSTRAINT FK_7B00651C8F7ED78A FOREIGN KEY (status_documento_id) REFERENCES status_documento (id)');
+        $this->addSql('CREATE INDEX IDX_7B00651C8F7ED78A ON status (status_documento_id)');
     }
 }

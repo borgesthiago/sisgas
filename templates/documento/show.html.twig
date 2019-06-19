@@ -3,63 +3,66 @@
 {% block title %}Documento{% endblock %}
 
 {% block body %}
-    <h1>Documento</h1>
+<div class="espaco">
+    <h3>{% set tipo = get_static_method('App\\Enum\\TipoDocumentoEnum', 'getTipo') %}
+        {{ tipo[documento.tipo] }} - Nº {{ documento.numero }}</h3>
+    <div class="direita">
+        <a href="{{ path('documento_index') }}" class="ui secondary button icon"><i class="arrow circle left icon"></i></a>
+        <a href="{{ path('documento_edit', {'id': documento.id}) }}" class="ui button icon"><i class="edit icon"></i></a>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {{ include('documento/_delete_form.html.twig') }}
+        {% endif %}
+    </div>
 
-    <table class="table">
+    <table class="ui compact celled table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ documento.id }}</td>
-            </tr>
-            <tr>
-                <th>Tipo</th>
-                <td>{{ documento.tipo }}</td>
-            </tr>
-            <tr>
-                <th>Numero</th>
-                <td>{{ documento.numero }}</td>
-            </tr>
-            <tr>
-                <th>DataRecebido</th>
-                <td>{{ documento.dataRecebido ? documento.dataRecebido|date('Y-m-d') : '' }}</td>
+                <th>Data Cadastro</th>
+                <td>{{ documento.dataRecebido ? documento.dataRecebido|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Prazo</th>
-                <td>{{ documento.prazo }}</td>
+                <td>{{ documento.prazo }} dias</td>
             </tr>
             <tr>
-                <th>Reiteracao</th>
-                <td>{{ documento.reiteracao ? 'Yes' : 'No' }}</td>
+                <th>Reiteração</th>
+                <td>{{ documento.reiteracao ? 'Sim' : 'Não' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ documento.ultimoStatus.descricao }}</td>
             </tr>       
         </tbody>
     </table>
-<table class="table">
+    <table class="ui compact celled table">
         <thead>
             <tr>
+                <th>Origem</th>
+                <th>Enviado Por</th>
+                <th>Data Enviado</th>
                 <th>Destino</th>
-                <th>Enviado</th>
-                <th>Recebido</th>
-                <th>Observacao</th>
+                <th>Recebido Por</th>
+                <th>Data Recebido</th>
+                <th>Observação</th>
             </tr>
         </thead>
         <tbody>
         {% for tramitacao in documento.tramitacao %}
-            <tr>
-                <td>{{ tramitacao.destino }}</td>
-                <td>{{ tramitacao.dataInicio ? tramitacao.dataInicio|date('d/m/Y') : '' }}</td>
+            <tr class="center aligned">
+                <td class="active">{{ tramitacao.origem }}</td>
+                <td class="active">{{ tramitacao.funcionarioOrigem }}</td>
+                <td class="active">{{ tramitacao.dataInicio ? tramitacao.dataInicio|date('d/m/Y') : '' }}</td>
+                <td >{{ tramitacao.destino }}</td>
+                <td>{{ tramitacao.funcionarioDestino }}</td>
                 <td>{{ tramitacao.dataFim ? tramitacao.dataFim|date('d/m/Y') : '' }}</td>
                 <td>{{ tramitacao.observacao }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">nenhum registro encontrado.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('documento_index') }}">back to list</a>
-
-    <a href="{{ path('documento_edit', {'id': documento.id}) }}">edit</a>
-
-    {{ include('documento/_delete_form.html.twig') }}
+</div>
 {% endblock %}

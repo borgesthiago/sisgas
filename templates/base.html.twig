@@ -39,8 +39,9 @@
                     Documentos <i class="dropdown icon"></i>
                     <div class="menu">
                         <a class="item" href="{{ path('documento_index') }}">Listar</a>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <a class="item" href="{{ path('documento_new') }}">Cadastrar</a>
-                                            
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -62,6 +63,7 @@
                 </div>
                 </div>
             </div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
             <div class="menu">
                 <div class="ui dropdown item"><i class="cogs icon"></i>
                     Configurações <i class="dropdown icon"></i>
@@ -91,6 +93,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="right menu"> 
                 <div class="menu">
                     <div class="ui dropdown item">
@@ -104,9 +107,19 @@
                 </div>
             </div>
         </div>
-        
         <div class="container">
-        {% block body %}{% endblock %}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="ui {{ label }} message">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+            {% block body %}{% endblock %}
+        
         <script
                 src="https://code.jquery.com/jquery-3.1.1.min.js"
                 integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
@@ -115,7 +128,7 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
                 integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
                 crossorigin="anonymous"></script>
-          <script src="{{ asset('assets/js/drop.js') }}"></script>
+        <script src="{{ asset('assets/js/drop.js') }}"></script>
         
         {% block javascripts %}{% endblock %}
         </div>

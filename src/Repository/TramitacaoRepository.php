@@ -19,32 +19,21 @@ class TramitacaoRepository extends ServiceEntityRepository
         parent::__construct($registry, Tramitacao::class);
     }
 
-    // /**
-    //  * @return Tramitacao[] Returns an array of Tramitacao objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByDocumentoNaoRecebido($documento)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $q = $this->createQueryBuilder('t');
+        return $q
+                ->where(
+                 $q->expr()
+                    ->andX(
+                        $q->expr()->isNull('t.funcionarioDestino'),
+                        $q->expr()->isNull('t.dataFim'),
+                        ('t.documento = :documento')
+                    )
+                )
+                ->setParameter('documento', $documento)
+                ->getQuery()
+                ->getResult()
         ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Tramitacao
-    {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

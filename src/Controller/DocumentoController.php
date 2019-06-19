@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use DateTime;
-use App\Entity\Status;
 use App\Entity\Documento;
 use App\Entity\Tramitacao;
 use App\Form\DocumentoType;
-use App\Form\EncaminhaType;
+use App\Entity\StatusDocumento;
 use App\Repository\StatusRepository;
 use App\Repository\DocumentoRepository;
+use App\Repository\TramitacaoRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use App\Repository\StatusDocumentoRepository;
 
 /**
  * @Route("/documento")
@@ -24,18 +25,30 @@ class DocumentoController extends AbstractController
     /**
      * @Route("/", name="documento_index", methods="GET")
      */
-    public function index(DocumentoRepository $documentoRepository): Response
-    {
-        $documentos = $documentoRepository->findAll();
-        foreach ($documentos as $documento) {
-            $dataAutal = new DateTime(date('Y-m-d'));
-            $dataRecebido = new DateTime($documento->getDataRecebido()->format('Y-m-d'));
-            $intervalo = ($dataRecebido->diff($dataAutal))->format('%R%a dias');
+    public function index(
+        DocumentoRepository $documentoRepository,
+        TramitacaoRepository $tramitacaoRepository,
+        UserInterface $user,
+        AuthorizationCheckerInterface $authChecker,
+        StatusDocumentoRepository $statusDocumentoRepository
+    ): Response {
+        $tramitacao = $tramitacaoRepository->findOneBy(
+            [
+                'destino' => $user->getFuncionario()->getSecretaria()
+            ]
+        );
+        if ($authChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            $documentos = $documentoRepository->findAll();
+        } else {
+            $documentos = $documentoRepository->findBySetor($tramitacao->getDestino());
         }
+        //consultar ultima localizacao da tramitacao
+       
         return $this->render(
             'documento/index.html.twig',
             [
-                'documentos' => $documentos
+                'documentos' => $documentos,
+                'tramitacoes' => $tramitacao
             ]
         );
     }
@@ -49,9 +62,12 @@ class DocumentoController extends AbstractController
         StatusRepository $statusRepository
     ): Response {
         $documento = new Documento();
+        $statusDocumento = new StatusDocumento();
+        
         $form = $this->createForm(DocumentoType::class, $documento);
         $form->handleRequest($request);
-        $status = $statusRepository->findOneBy(['descricao' => 'Recebido']);
+
+        $status = $statusRepository->findOneBy(['descricao' => 'Recebido Externo']);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $tramitacao = new Tramitacao();
@@ -60,11 +76,17 @@ class DocumentoController extends AbstractController
                 ->setFuncionarioOrigem($user->getFuncionario())
                 ->setFuncionarioDestino($user->getFuncionario())
                 ->setDestino($user->getFuncionario()->getSecretaria())
+                ->setDataInicio(new \DateTime(date('Y-m-d H:i:s')))
+                ->setDataFim(new \DateTime(date('Y-m-d H:i:s')))
+            ;
+            $statusDocumento
+                ->setData(new \DateTime(date('Y-m-d H:i:s')))
                 ->setStatus($status)
-                ->setDataInicio(new \DateTime(date('Y-m-d')))
-                ->setDataFim(new \DateTime(date('Y-m-d')))
+                ->setDocumento($documento)
+                ->setUser($user)
             ;
             $documento->addTramitacao($tramitacao);
+            $documento->addStatusDocumento($statusDocumento);
             $em = $this->getDoctrine()->getManager();
             $em->persist($documento);
             $em->flush();
@@ -73,42 +95,6 @@ class DocumentoController extends AbstractController
         }
 
         return $this->render('documento/new.html.twig', [
-            'documento' => $documento,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/encaminhar/{id}", name="documento_encaminhar", methods="GET|POST")
-     */
-    public function encaminhar(
-        Request $request,
-        Documento $documento,
-        UserInterface $user,
-        StatusRepository $statusRepository
-    ): Response {
-        $form = $this->createForm(EncaminhaType::class, $documento);
-        $form->handleRequest($request);
-        $status = $statusRepository->findOneBy(['descricao' => 'Em Análise']);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $tramitacao = new Tramitacao();
-            $tramitacao
-                ->setOrigem($user->getFuncionario()->getSecretaria())
-                ->setFuncionarioOrigem($user->getFuncionario())
-                ->setDestino($documento->getOrigem())
-                ->setStatus($status)
-                ->setDataInicio(new \DateTime(date('Y-m-d')))
-            ;
-            // dump($tramitacao);die;
-            $documento->addTramitacao($tramitacao);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tramitacao);
-            $em->flush();
-
-            return $this->redirectToRoute('documento_index', ['id' => $documento->getId()]);
-        }
-
-        return $this->render('documento/encaminhar.html.twig', [
             'documento' => $documento,
             'form' => $form->createView(),
         ]);

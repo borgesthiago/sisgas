@@ -5,9 +5,11 @@
 {% block body %}
 <div class="espaco">
     <h3>Listagem de Documentos</h3>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
     <div class="direita">
         <a href="{{ path('documento_new') }}"><button type="button" class="ui primary button"><i class="fa fa-plus-circle" aria-hidden="true"></i> Novo</button></a>
     </div>
+    {% endif %}
     <table class="ui celled table">
         <thead>
             <tr class="ui center aligned">
@@ -18,6 +20,7 @@
                 <th>Tempo <small>Decorrido</small></th>
                 <th>Reiteração</th>
                 <th>Localização</th>
+                <th>Status</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -37,17 +40,36 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% for tramitacao in documento.tramitacao %}
-                    {{ tramitacao.destino }}
-                    {% endfor %}
+                    {{ documento.ultimoDestino }}
                 </td>
+                <td>{{ documento.ultimoStatus.descricao}}</td>
                 <td>
-                    <a href="{{ path('documento_show', {'id': documento.id}) }}">show</a>
-                    <a href="{{ path('documento_edit', {'id': documento.id}) }}">edit</a>
-                    <a href="{{ path('documento_encaminhar', {'id': documento.id}) }}" 
-                        class="ui compact icon positive encaminhar button" title="Encaminhar">
-                        <i class="arrow alt circle right icon"></i>
-                    </a>
+                    <div class="ui small icon buttons">
+                        <a href="{{ path('documento_show', {'id': documento.id}) }}"
+                            class="ui compact icon button" >
+                            <i class="file icon"></i>
+                        </a>
+                        <a href="{{ path('documento_edit', {'id': documento.id}) }}"
+                            class="ui compact icon button" >
+                            <i class="edit icon"></i>
+                        </a>
+                        {% if tramitacoes.dataFim == null %}
+                            {% if documento.ultimoDestino == app.user.funcionario.secretaria.nome %}}
+                            <a href="{{ path('tramitacao_receber', {'id': documento.id}) }}" 
+                                class="ui compact icon secondary button" title="Receber">
+                                <i class="arrow alt circle down icon"></i>
+                            </a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ path('tramitacao_new', {'id': documento.id}) }}" 
+                            class="ui compact icon positive button" title="Encaminhar">
+                            <i class="arrow alt circle right icon"></i>
+                        </a>
+                        <a href="#" 
+                            class="ui compact icon grey button" title="Alterar Status">
+                            <i class="sync alt circle right icon"></i>
+                        </a>
+                    </div>
                 </td>
        {% else %}
             </tr>

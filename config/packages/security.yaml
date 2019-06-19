@@ -33,6 +33,7 @@ security:
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/remuneracao, roles: ROLE_USER }
         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/documento, roles: ROLE_USER }
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         ROLE_ADMIN:       [ROLE_USER]

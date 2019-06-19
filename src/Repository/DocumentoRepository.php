@@ -19,22 +19,18 @@ class DocumentoRepository extends ServiceEntityRepository
         parent::__construct($registry, Documento::class);
     }
 
-    // /**
-    //  * @return Documento[] Returns an array of Documento objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findBySetor($setor)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $q = $this->createQueryBuilder('d');
+        return $q
+                ->join('d.tramitacao', 't')
+                ->where('t.destino = :val')
+                ->setParameter('val', $setor)
+                ->orderBy('d.id', 'ASC')
+                ->getQuery()
+                ->getResult()
         ;
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Documento

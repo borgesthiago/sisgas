@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
@@ -8,16 +10,21 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181228232302 extends AbstractMigration
+final class Version20190619181814 extends AbstractMigration
 {
+    public function getDescription() : string
+    {
+        return '';
+    }
+
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE servicos DROP FOREIGN KEY FK_89DD09E3584CC12E');
-        $this->addSql('DROP INDEX IDX_89DD09E3584CC12E ON servicos');
-        $this->addSql('ALTER TABLE servicos DROP secretaria_id');
+        $this->addSql('ALTER TABLE status_documento ADD user_id INT NOT NULL');
+        $this->addSql('ALTER TABLE status_documento ADD CONSTRAINT FK_3E24AE86A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('CREATE INDEX IDX_3E24AE86A76ED395 ON status_documento (user_id)');
     }
 
     public function down(Schema $schema) : void
@@ -25,8 +32,8 @@ final class Version20181228232302 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE servicos ADD secretaria_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE servicos ADD CONSTRAINT FK_89DD09E3584CC12E FOREIGN KEY (secretaria_id) REFERENCES secretaria (id)');
-        $this->addSql('CREATE INDEX IDX_89DD09E3584CC12E ON servicos (secretaria_id)');
+        $this->addSql('ALTER TABLE status_documento DROP FOREIGN KEY FK_3E24AE86A76ED395');
+        $this->addSql('DROP INDEX IDX_3E24AE86A76ED395 ON status_documento');
+        $this->addSql('ALTER TABLE status_documento DROP user_id');
     }
 }
