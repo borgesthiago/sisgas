@@ -31,7 +31,13 @@
                 <td>{{ documento.numero }}</td>
                 <td>{{ documento.dataRecebido ? documento.dataRecebido|date('d/m/Y') : '' }}</td>
                 <td>{{ documento.prazo }}</td>
-                <td>{{ documento.dataRecebido|time_diff }}</td>
+                <td>
+                {% if documento.ultimoStatus == 'Arquivado' %}
+                    Documento Arquivado
+                {% else %}
+                {{ documento.dataRecebido|time_diff }}
+                {% endif %}
+                </td>
                 <td>
                     {% if documento.reiteracao == 1 %}
                         {{documento.numeroReiteracao.numero}}
@@ -53,14 +59,14 @@
                             class="ui compact icon button" >
                             <i class="edit icon"></i>
                         </a>
-                        {% if tramitacoes.dataFim == null %}
+                        {# {% if tramitacoes.dataFim == null %} #}
                             {% if documento.ultimoDestino == app.user.funcionario.secretaria.nome %}}
                             <a href="{{ path('tramitacao_receber', {'id': documento.id}) }}" 
                                 class="ui compact icon secondary button" title="Receber">
                                 <i class="arrow alt circle down icon"></i>
                             </a>
                             {% endif %}
-                        {% endif %}
+                        {# {% endif %} #}
                         <a href="{{ path('tramitacao_new', {'id': documento.id}) }}" 
                             class="ui compact icon positive button" title="Encaminhar">
                             <i class="arrow alt circle right icon"></i>

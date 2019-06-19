@@ -29,8 +29,7 @@ class DocumentoController extends AbstractController
         DocumentoRepository $documentoRepository,
         TramitacaoRepository $tramitacaoRepository,
         UserInterface $user,
-        AuthorizationCheckerInterface $authChecker,
-        StatusDocumentoRepository $statusDocumentoRepository
+        AuthorizationCheckerInterface $authChecker
     ): Response {
         $tramitacao = $tramitacaoRepository->findOneBy(
             [
@@ -42,7 +41,6 @@ class DocumentoController extends AbstractController
         } else {
             $documentos = $documentoRepository->findBySetor($tramitacao->getDestino());
         }
-        //consultar ultima localizacao da tramitacao
        
         return $this->render(
             'documento/index.html.twig',
