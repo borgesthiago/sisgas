@@ -39,7 +39,8 @@ class DocumentoController extends AbstractController
         if ($authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $documentos = $documentoRepository->findAll();
         } else {
-            $documentos = $documentoRepository->findBySetor($tramitacao->getDestino());
+            $documentos = $documentoRepository
+                ->findBySetor($tramitacao->getDestino());
         }
        
         return $this->render(
@@ -75,14 +76,14 @@ class DocumentoController extends AbstractController
                 ->setFuncionarioDestino($user->getFuncionario())
                 ->setDestino($user->getFuncionario()->getSecretaria())
                 ->setDataInicio(new \DateTime(date('Y-m-d H:i:s')))
-                ->setDataFim(new \DateTime(date('Y-m-d H:i:s')))
-            ;
+                ->setDataFim(new \DateTime(date('Y-m-d H:i:s')));
+
             $statusDocumento
                 ->setData(new \DateTime(date('Y-m-d H:i:s')))
                 ->setStatus($status)
                 ->setDocumento($documento)
-                ->setUser($user)
-            ;
+                ->setUser($user);
+
             $documento->addTramitacao($tramitacao);
             $documento->addStatusDocumento($statusDocumento);
             $em = $this->getDoctrine()->getManager();
@@ -92,10 +93,42 @@ class DocumentoController extends AbstractController
             return $this->redirectToRoute('documento_index');
         }
 
-        return $this->render('documento/new.html.twig', [
-            'documento' => $documento,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'documento/new.html.twig', 
+            [
+                'documento' => $documento,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * @Route("/{id}/status", name="documento_status", methods="GET")
+     */
+    public function status(
+        Request $request,
+        Documento $documento
+    ): Response {
+        $form = $this->createForm(DocumentoType::class, $documento);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute(
+                'documento_index',
+                [
+                    'id' => $documento->getId()
+                ]
+            );
+        }
+        // dump($documento);die;
+        return $this->render(
+            'documento/edit.html.twig',
+            [
+                'documento' => $documento,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -103,7 +136,6 @@ class DocumentoController extends AbstractController
      */
     public function show(Documento $documento): Response
     {
-
         return $this->render(
             'documento/show.html.twig',
             [
@@ -124,13 +156,21 @@ class DocumentoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('documento_index', ['id' => $documento->getId()]);
+            return $this->redirectToRoute(
+                'documento_index',
+                [
+                    'id' => $documento->getId()
+                ]
+            );
         }
 
-        return $this->render('documento/edit.html.twig', [
-            'documento' => $documento,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'documento/edit.html.twig',
+            [
+                'documento' => $documento,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**

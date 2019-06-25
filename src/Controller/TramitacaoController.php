@@ -26,7 +26,8 @@ class TramitacaoController extends AbstractController
         TramitacaoRepository $tramitacaoRepository
     ): Response {
         $tramitacoes = $tramitacaoRepository->findAll();
-        return $this->render('tramitacao/index.html.twig',
+        return $this->render(
+            'tramitacao/index.html.twig',
             [
                 'tramitacaos' => $tramitacoes
             ]
@@ -52,8 +53,8 @@ class TramitacaoController extends AbstractController
         $status = $statusRepository->findOneBy(['descricao' => 'Enviado']);
 
         //verificar se já não foi encaminhada para o setor
-        $documentoTramitado = 
-            $tramitacaoRepository->findByDocumentoNaoRecebido($documento);
+        $documentoTramitado = $tramitacaoRepository
+            ->findByDocumentoNaoRecebido($documento);
         if ($documentoTramitado != null) {
             $this->addFlash(
                 'warning',
@@ -67,13 +68,14 @@ class TramitacaoController extends AbstractController
             $tramitacao
                 ->setDataInicio(new \DateTime(date('Y-m-d H:i:s')))
                 ->setDocumento($documento)
-            ;
+                ->setOrigem($user->getFuncionario()->getSecretaria());
+
             $statusDocumento
                 ->setData(new \DateTime(date('Y-m-d H:i:s')))
                 ->setStatus($status)
                 ->setDocumento($documento)
-                ->setUser($user)
-            ;
+                ->setUser($user);
+
             $documento->addStatusDocumento($statusDocumento);
             $em = $this->getDoctrine()->getManager();
             $em->persist($tramitacao);
@@ -82,10 +84,13 @@ class TramitacaoController extends AbstractController
             return $this->redirectToRoute('documento_index');
         }
 
-        return $this->render('tramitacao/new.html.twig', [
-            'tramitacao' => $tramitacao,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'tramitacao/new.html.twig',
+            [
+                'tramitacao' => $tramitacao,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -113,14 +118,14 @@ class TramitacaoController extends AbstractController
             $tramitacao
                 ->setDataFim(new \DateTime(date('Y-m-d H:i:s')))
                 ->setFuncionarioDestino($user->getFuncionario())
-                ->setDocumento($documento)
-            ;
+                ->setDocumento($documento);
+
             $statusDocumento
                 ->setData(new \DateTime(date('Y-m-d H:i:s')))
                 ->setStatus($status)
                 ->setDocumento($documento)
-                ->setUser($user)
-            ;
+                ->setUser($user);
+
             $documento->addStatusDocumento($statusDocumento);
             $em = $this->getDoctrine()->getManager();
             $em->persist($tramitacao);
@@ -138,7 +143,12 @@ class TramitacaoController extends AbstractController
      */
     public function show(Tramitacao $tramitacao): Response
     {
-        return $this->render('tramitacao/show.html.twig', ['tramitacao' => $tramitacao]);
+        return $this->render(
+            'tramitacao/show.html.twig',
+            [
+                'tramitacao' => $tramitacao
+            ]
+        );
     }
 
     /**
@@ -152,13 +162,21 @@ class TramitacaoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tramitacao_index', ['id' => $tramitacao->getId()]);
+            return $this->redirectToRoute(
+                'tramitacao_index',
+                [
+                    'id' => $tramitacao->getId()
+                ]
+            );
         }
 
-        return $this->render('tramitacao/edit.html.twig', [
-            'tramitacao' => $tramitacao,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'tramitacao/edit.html.twig',
+            [
+                'tramitacao' => $tramitacao,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -166,7 +184,8 @@ class TramitacaoController extends AbstractController
      */
     public function delete(Request $request, Tramitacao $tramitacao): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tramitacao->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$tramitacao->getId(), $request->request->get('_token'))
+        ) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($tramitacao);
             $em->flush();

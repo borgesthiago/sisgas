@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StatusDocumento index{% endblock %}
+
+{% block body %}
+    <h1>StatusDocumento index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Data</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for status_documento in status_documentos %}
+            <tr>
+                <td>{{ status_documento.id }}</td>
+                <td>{{ status_documento.data ? status_documento.data|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('status_documento_show', {'id': status_documento.id}) }}">show</a>
+                    <a href="{{ path('status_documento_edit', {'id': status_documento.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('status_documento_new') }}">Create new</a>
+{% endblock %}

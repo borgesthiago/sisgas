@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StatusDocumento{% endblock %}
+
+{% block body %}
+    <h1>StatusDocumento</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ status_documento.id }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ status_documento.data ? status_documento.data|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('status_documento_index') }}">back to list</a>
+
+    <a href="{{ path('status_documento_edit', {'id': status_documento.id}) }}">edit</a>
+
+    {{ include('status_documento/_delete_form.html.twig') }}
+{% endblock %}

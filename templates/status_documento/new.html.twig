@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StatusDocumento{% endblock %}
+
+{% block body %}
+    <h1>Create new StatusDocumento</h1>
+
+    {{ include('status_documento/_form.html.twig') }}
+
+    <a href="{{ path('status_documento_index') }}">back to list</a>
+{% endblock %}

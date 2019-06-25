@@ -17,6 +17,10 @@
     <table class="ui compact celled table">
         <tbody>
             <tr>
+                <th>Origem</th>
+                <td>{{ documento.origem }}</td>
+            </tr>
+            <tr>
                 <th>Data Cadastro</th>
                 <td>{{ documento.dataRecebido ? documento.dataRecebido|date('d/m/Y') : '' }}</td>
             </tr>
