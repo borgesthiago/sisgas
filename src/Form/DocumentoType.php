@@ -26,7 +26,13 @@ class DocumentoType extends AbstractType
                     'placeholder' => 'Selecione'
                 ]
             )
-            ->add('numero')
+            ->add(
+                'numero',
+                null,
+                [
+                    'label' => 'N° Documento'
+                ]
+            )
             ->add(
                 'dataRecebido',
                 DateType::class,
@@ -69,6 +75,7 @@ class DocumentoType extends AbstractType
                 'numero_reiteracao',
                 EntityType::class,
                 [
+                    'label' => 'Nº Reiteração',
                     'class' => Documento::class,
                     'choice_label' => 'numero',
                     'placeholder' => 'Selecione',
