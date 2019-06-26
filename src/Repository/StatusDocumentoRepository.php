@@ -28,8 +28,7 @@ class StatusDocumentoRepository extends ServiceEntityRepository
             ->orderBy('s.id', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
-            ->getsingleResult()
-        ;
+            ->getSingleResult();
     }
 
     /*

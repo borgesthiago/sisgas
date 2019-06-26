@@ -26,16 +26,29 @@
         </thead>
         <tbody>
         {% for documento in documentos %}
-            <tr>
+            {% if documento.ultimoStatus.descricao == 'Arquivado' %}
+                <tr>
+            {% else %}
+                {% if documento.dataRecebido|time_diff > documento.prazo %}
+                    <tr class="negative">
+                {% else %}
+                <tr>
+                {% endif %}
+            {% endif %}
                 <td>{{ documento.origem }}</td>
                 <td>{{ documento.numero }}</td>
                 <td>{{ documento.dataRecebido ? documento.dataRecebido|date('d/m/Y') : '' }}</td>
                 <td>{{ documento.prazo }}</td>
                 <td>
-                {% if documento.ultimoStatus == 'Arquivado' %}
+                {% if documento.ultimoStatus.descricao == 'Arquivado' %}
                     Documento Arquivado
                 {% else %}
-                {{ documento.dataRecebido|time_diff }}
+                    {% if documento.dataRecebido|time_diff > documento.prazo %}                        
+                        <i class="icon exclamation triangule"></i>
+                        {{ documento.dataRecebido|time_diff }}
+                    {% else %}
+                        {{ documento.dataRecebido|time_diff }}
+                    {% endif %}
                 {% endif %}
                 </td>
                 <td>
@@ -65,15 +78,15 @@
                                 class="ui compact icon secondary button" title="Receber">
                                 <i class="arrow alt circle down icon"></i>
                             </a>
+                            <a href="{{ path('status_documento_edit',{'id' : documento.id }) }}" 
+                                class="ui compact icon grey button" title="Alterar Status">
+                                <i class="sync alt circle right icon"></i>
+                            </a>
                             {% endif %}
                         {# {% endif %} #}
                         <a href="{{ path('tramitacao_new', {'id': documento.id}) }}" 
                             class="ui compact icon positive button" title="Encaminhar">
                             <i class="arrow alt circle right icon"></i>
-                        </a>
-                        <a href="{{ path('status_documento_edit',{'id' : documento.id }) }}" 
-                            class="ui compact icon grey button" title="Alterar Status">
-                            <i class="sync alt circle right icon"></i>
                         </a>
                     </div>
                 </td>

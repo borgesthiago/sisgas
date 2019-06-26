@@ -1,4 +1,16 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{% form_theme form 'form/form_div.html.twig' %}
+<div class="ui grid">
+    <div class="column">
+        {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+        <div class="fields">
+            {{ form_row(form.status, {'attr': {'data-row-class': 'three wide'}}) }}
+        </div>
+         <div class="fields">
+            <div class="ui right floated buttons">
+                <a href="{{ path('documento_index') }}" class="ui secondary button icon"><i class="arrow alt circle left icon"></i> Voltar</a>
+                <button class="ui positive button">Alterar <i class="sync alt circle right icon"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
 {{ form_end(form) }}

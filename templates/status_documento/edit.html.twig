@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit StatusDocumento{% endblock %}
+{% block title %}Alterar Status{% endblock %}
 
 {% block body %}
-    <h1>Edit StatusDocumento</h1>
+<div class="espaco">
+    <h3>Alterar Status do Documento</h3>
 
-    {{ include('status_documento/_form.html.twig', {'button_label': 'Update'}) }}
-
+    {{ include('status_documento/_form.html.twig', {'button_label': 'Alterar'}) }}
+</div>
 {% endblock %}

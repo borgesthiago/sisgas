@@ -9,13 +9,13 @@ use App\Entity\StatusDocumento;
 use App\Repository\StatusRepository;
 use App\Repository\DocumentoRepository;
 use App\Repository\TramitacaoRepository;
+use App\Repository\StatusDocumentoRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use App\Repository\StatusDocumentoRepository;
 
 /**
  * @Route("/documento")
@@ -42,7 +42,6 @@ class DocumentoController extends AbstractController
             $documentos = $documentoRepository
                 ->findBySetor($tramitacao->getDestino());
         }
-       
         return $this->render(
             'documento/index.html.twig',
             [
@@ -103,43 +102,19 @@ class DocumentoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/status", name="documento_status", methods="GET")
-     */
-    public function status(
-        Request $request,
-        Documento $documento
-    ): Response {
-        $form = $this->createForm(DocumentoType::class, $documento);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute(
-                'documento_index',
-                [
-                    'id' => $documento->getId()
-                ]
-            );
-        }
-        // dump($documento);die;
-        return $this->render(
-            'documento/edit.html.twig',
-            [
-                'documento' => $documento,
-                'form' => $form->createView(),
-            ]
-        );
-    }
-
-    /**
      * @Route("/{id}", name="documento_show", methods="GET")
      */
-    public function show(Documento $documento): Response
-    {
+    public function show(
+        Documento $documento,
+        StatusDocumentoRepository $statusDocumentoRepository
+    ): Response {
+        $statusDocumento = $statusDocumentoRepository->findByDocumento($documento, 1);
+
         return $this->render(
             'documento/show.html.twig',
             [
-                'documento' => $documento
+                'documento' => $documento,
+                'statusDocumento' => $statusDocumento
             ]
         );
     }

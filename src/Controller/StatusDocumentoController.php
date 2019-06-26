@@ -62,7 +62,7 @@ class StatusDocumentoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="status_documento_edit", methods={"GET","POST"})
+     * @Route("/{id}/alterar", name="status_documento_edit", methods={"GET","POST"})
      */
     public function edit(
         Request $request,
@@ -79,7 +79,6 @@ class StatusDocumentoController extends AbstractController
                 'id' => 'DESC'
             ]
         );
-        //dump($documento, $status->getStatus()->getDescricao());die;
         $statusDocumento
             ->setData(new \DateTime(date('Y-m-d H:i:s')))
             ->setStatus($statusDoc->getStatus())
@@ -94,10 +93,7 @@ class StatusDocumentoController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute(
-                'status_documento_index',
-                [
-                    'id' => $statusDocumento->getId(),
-                ]
+                'documento_index'
             );
         }
 

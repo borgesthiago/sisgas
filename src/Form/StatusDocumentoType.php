@@ -8,14 +8,12 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class StatusDocumentoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('data')
             ->add(
                 'status',
                 EntityType::class,
@@ -24,8 +22,7 @@ class StatusDocumentoType extends AbstractType
                     'choice_label' => 'descricao',
                     'placeholder' => 'Selecione'
                 ]
-            )
-            ->add('documento');
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
