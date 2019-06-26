@@ -68,6 +68,7 @@ class TramitacaoController extends AbstractController
             $tramitacao
                 ->setDataInicio(new \DateTime(date('Y-m-d H:i:s')))
                 ->setDocumento($documento)
+                ->setFuncionarioOrigem($user->getFuncionario())
                 ->setOrigem($user->getFuncionario()->getSecretaria());
 
             $statusDocumento
