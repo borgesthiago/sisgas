@@ -33,7 +33,6 @@ class UsuarioType extends AbstractType
             ->add('dataNascimento', DateType::class, array(
                 'widget' => 'single_text',
                 'label' => 'Data Nascimento',
-                // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
                 'required' => false
             ))
@@ -43,7 +42,6 @@ class UsuarioType extends AbstractType
             ->add('sexo', ChoiceType::class, [
                 'label' => 'Sexo',
                 'choices'  => [
-                    'Selecione' => null,
                     'F' => 'F',
                     'M' => 'M',
                 ],
@@ -51,9 +49,8 @@ class UsuarioType extends AbstractType
             ->add('pcd', ChoiceType::class, [
                 'label' => 'PCD ?',
                 'choices'  => [
-                    'Selecione' => null,
-                    'Sim' => true,
                     'Não' => false,
+                    'Sim' => true,
                 ],
             ])
             ->add('naturalidade', null, [
