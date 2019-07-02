@@ -101,6 +101,11 @@ class Usuario
      */
     private $documento;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Endereco", inversedBy="usuarios")
+     */
+    private $endereco;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -306,6 +311,18 @@ class Usuario
     public function setDocumento(?Documento $documento): self
     {
         $this->documento = $documento;
+
+        return $this;
+    }
+
+    public function getEndereco(): ?Endereco
+    {
+        return $this->endereco;
+    }
+
+    public function setEndereco(?Endereco $endereco): self
+    {
+        $this->endereco = $endereco;
 
         return $this;
     }

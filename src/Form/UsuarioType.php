@@ -3,10 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Usuario;
+use App\Entity\Endereco;
+use App\Form\EnderecoType;
 use App\Form\Type\CpfType;
 use App\Enum\EscolaridadeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -79,6 +82,13 @@ class UsuarioType extends AbstractType
             ->add('nis', null, [
                 'label' => 'NIS',
             ])
+            ->add(
+                'endereco',
+                EnderecoType::class,
+                [
+                    'label' => 'Endereço'
+                ]
+            )
         ;
     }
 
