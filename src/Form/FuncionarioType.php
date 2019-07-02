@@ -24,7 +24,7 @@ class FuncionarioType extends AbstractType
             ))
             ->add('cpf', CpfType::class, [
                 'required' => false
-            ])            
+            ])
             ->add('cargo')
             ->add('funcao', null, array(
                 'required'   => false,
@@ -52,7 +52,7 @@ class FuncionarioType extends AbstractType
                 'class' => Secretaria::class,
                 'choice_label' => 'nome',
                 'placeholder' => 'Selecione'
-                ])                              
+                ])
         ;
         $builder->add('admissao', DateType::class, array(
             'widget' => 'single_text',

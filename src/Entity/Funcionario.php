@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Validator as AppAssert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FuncionarioRepository")
  */
@@ -56,7 +57,7 @@ class Funcionario
     private $remuneracao;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="funcionario")     
+     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="funcionario")
      */
     private $user;
 
@@ -223,7 +224,7 @@ class Funcionario
         return $this;
     }
 
-    public function __toString() 
+    public function __toString()
     {
         return $this->getNome();
     }
@@ -433,5 +434,4 @@ class Funcionario
 
         return $this;
     }
-
 }

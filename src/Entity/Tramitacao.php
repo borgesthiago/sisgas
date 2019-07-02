@@ -166,5 +166,4 @@ class Tramitacao
 
         return $this;
     }
-
 }

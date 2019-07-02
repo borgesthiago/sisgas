@@ -18,7 +18,7 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             
-            ->add('roles',  ChoiceType::class, array(
+            ->add('roles', ChoiceType::class, array(
                 'choices' => RolesEnum::getRoles(),
                 'multiple' => true,
                 'label' => 'Nível'

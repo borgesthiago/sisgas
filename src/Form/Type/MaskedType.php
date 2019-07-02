@@ -8,13 +8,14 @@ use Symfony\Component\Form\FormBuilderInterface;
 class MaskedType extends AbstractType
 {
 
-	public function buildForm(FormBuilderInterface $builder, array $options){
-		$transformer = new \App\Form\DataTransformer\RemoveMaskTransformer();
-		$builder->addModelTransformer($transformer);
-	}
-	
-	public function getParent()
-	{
-		return TextType::class;
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $transformer = new \App\Form\DataTransformer\RemoveMaskTransformer();
+        $builder->addModelTransformer($transformer);
+    }
+    
+    public function getParent()
+    {
+        return TextType::class;
+    }
 }

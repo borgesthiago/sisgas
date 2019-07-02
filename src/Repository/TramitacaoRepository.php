@@ -24,7 +24,7 @@ class TramitacaoRepository extends ServiceEntityRepository
         $q = $this->createQueryBuilder('t');
         return $q
                 ->where(
-                 $q->expr()
+                    $q->expr()
                     ->andX(
                         $q->expr()->isNull('t.funcionarioDestino'),
                         $q->expr()->isNull('t.dataFim'),

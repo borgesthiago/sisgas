@@ -9,7 +9,7 @@ abstract class EscolaridadeEnum
     const EMI     = 3;
     const EMC     = 4;
     const ESI     = 5;
-    const ESC     = 6;    
+    const ESC     = 6;
 
     public static function getEscolaridade()
     {
@@ -22,5 +22,4 @@ abstract class EscolaridadeEnum
             self::ESC  => 'Ensino Superior Completo',
         ];
     }
-
 }

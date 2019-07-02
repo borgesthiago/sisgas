@@ -20,5 +20,4 @@ abstract class TipoDocumentoEnum
             self::OUTROS    => 'Outros',
         ];
     }
-
 }

@@ -217,7 +217,7 @@ class Secretaria
     }
 
     public function __toString()
-    {    
+    {
         return (string) $this->getNome();
     }
 
@@ -359,5 +359,4 @@ class Secretaria
 
         return $this;
     }
-
 }

@@ -22,13 +22,13 @@ class SecretariaType extends AbstractType
             ->add('secretariaPai', null, array(
                 'label' => 'Secretaria Responsável'
             ))
-            ->add('equipamento',  ChoiceType::class, array(
+            ->add('equipamento', ChoiceType::class, array(
                 'required' => false,
                 'label' => 'Equipamento',
                 'choices'  => array(
                     'Não'  =>0,
                     'Sim' =>1
-            )))
+                )))
         ;
     }
 

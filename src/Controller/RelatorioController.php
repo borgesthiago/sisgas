@@ -6,10 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\FuncionarioRepository;
 use Dompdf\Dompdf;
 use PHPExcel;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style\Border;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,9 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
-require __DIR__ . '/../../vendor/autoload.php';
 
 class RelatorioController extends AbstractController
 {
@@ -79,7 +72,7 @@ class RelatorioController extends AbstractController
                 $data['data_inicio'],
                 $data['data_fim'],
                 $data['status']
-               // $data['tipo']
+                // $data['tipo']
             );
             $pdfClicked = $form->get('pdf')->isClicked();
             if ($pdfClicked) {
@@ -89,10 +82,12 @@ class RelatorioController extends AbstractController
             if ($excelClicked) {
                 $excel = $this->funcionarioExcel($funcionarios);
                 return new Response(
-                    $excel, 200, array (
+                    $excel,
+                    200,
+                    array (
                     'Content-Type' => 'application/vnd.ms-excel',
                     'Content-Disposition' => 'attachment; filename="Relatório_Funcionários.xlsx"',
-                )
+                    )
                 );
             }
         }
@@ -109,7 +104,7 @@ class RelatorioController extends AbstractController
         ]);
         $domPdf = new Dompdf();
         $domPdf->loadHtml($view);
-        $domPdf->setPaper('A4','portrait');
+        $domPdf->setPaper('A4', 'portrait');
         $domPdf->render();
         return $domPdf->stream('Relatório_Funcionários');
     }
@@ -122,13 +117,13 @@ class RelatorioController extends AbstractController
         $excel = new PHPExcel();
         $total = $funcionarios;
         $excel->setActiveSheetIndex(0)
-            ->setCellValue( 'A1', 'Mat.')
-            ->setCellValue( 'B1', 'Nome')
-            ->setCellValue( 'C1', 'Cargo')
-            ->setCellValue( 'D1', 'Status')
-            ->setCellValue( 'E1', 'Data Admissão')
-            ->setCellValue( 'F1', 'Data Exoneração')
-            ->setCellValue( 'G1', 'Remuneração');
+            ->setCellValue('A1', 'Mat.')
+            ->setCellValue('B1', 'Nome')
+            ->setCellValue('C1', 'Cargo')
+            ->setCellValue('D1', 'Status')
+            ->setCellValue('E1', 'Data Admissão')
+            ->setCellValue('F1', 'Data Exoneração')
+            ->setCellValue('G1', 'Remuneração');
         $contador = 1;
         foreach ($total as $linha) {
             $contador++;
@@ -178,5 +173,4 @@ class RelatorioController extends AbstractController
             ['totalSalarios' => $funcionarioRepository->salarioTotal()]
         );
     }
- 
 }

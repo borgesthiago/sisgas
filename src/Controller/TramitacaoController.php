@@ -107,7 +107,7 @@ class TramitacaoController extends AbstractController
 
         $status = $statusRepository->findOneBy(['descricao' => 'Recebido']);
 
-        $tramitacao = 
+        $tramitacao =
             $tramitacaoRepository->findOneBy(
                 [
                     'documento' => $documento

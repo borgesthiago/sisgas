@@ -61,8 +61,12 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/editar", name="user_editar", methods="GET|POST")
      */
-    public function edit(Request $request, User $user, UserRepository $usuarioRepository, UserPasswordEncoderInterface $encoder): Response
-    {
+    public function edit(
+        Request $request,
+        User $user,
+        UserRepository $usuarioRepository,
+        UserPasswordEncoderInterface $encoder
+    ): Response {
        
         $usuarioDb = $usuarioRepository->find($user->getId());
         $senha = $usuarioDb->getPassword();
@@ -75,7 +79,7 @@ class UserController extends AbstractController
             if (null != $user->getPassword()) {
                 $password = $encoder->encodePassword($user, $user->getPassword());
                 $user->setPassword($password);
-            }else{
+            } else {
                 $user->setPassword($senha);
             }
             $this->getDoctrine()->getManager()->flush();

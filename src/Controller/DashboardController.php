@@ -30,7 +30,7 @@ class DashboardController extends AbstractController
         $totalGra = $totalGratificacao->countGra();
         $totalDesc = $totalDesconto->countDesc();
        
-        return $this->render (
+        return $this->render(
             'dashboard/index.html.twig',
             [
                 'controller_name' => 'DashboardController',

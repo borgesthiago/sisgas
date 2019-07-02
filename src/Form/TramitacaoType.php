@@ -45,7 +45,8 @@ class TramitacaoType extends AbstractType
             )
             ->add(
                 'funcionarioOrigem',
-                null, [
+                null,
+                [
                     'label' => 'Funcionário Origem',
                     'attr' => [
                         'readonly' => true
@@ -68,7 +69,8 @@ class TramitacaoType extends AbstractType
             )
             ->add(
                 'documento',
-                null, [
+                null,
+                [
                     'label' => 'Nº Documento',
                     'attr' => [
                         'readonly' => true

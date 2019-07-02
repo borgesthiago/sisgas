@@ -14,7 +14,9 @@ class ServicosType extends AbstractType
     {
         $builder
             ->add('nome')
-            ->add('status', ChoiceType::class, 
+            ->add(
+                'status',
+                ChoiceType::class,
                 [
                     'required' => false,
                     'label' => 'Status',

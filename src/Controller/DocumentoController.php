@@ -93,7 +93,7 @@ class DocumentoController extends AbstractController
         }
 
         return $this->render(
-            'documento/new.html.twig', 
+            'documento/new.html.twig',
             [
                 'documento' => $documento,
                 'form' => $form->createView(),

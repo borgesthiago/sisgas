@@ -70,7 +70,7 @@ class DocumentoType extends AbstractType
                     'choice_label' => 'nome',
                     'placeholder' => 'Selecione'
                 ]
-            )             
+            )
             ->add(
                 'numero_reiteracao',
                 EntityType::class,
@@ -80,7 +80,7 @@ class DocumentoType extends AbstractType
                     'choice_label' => 'numero',
                     'placeholder' => 'Selecione',
                     'required' => false
-                ]             
+                ]
             );
     }
 
